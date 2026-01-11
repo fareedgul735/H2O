@@ -4,6 +4,7 @@ import { Outlet } from "react-router";
 import AnnouncementBar from "./AnnouncementBar";
 import { BiArrowToTop } from "react-icons/bi";
 import { FaWhatsapp } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const PageWrapper = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);

@@ -1,3 +1,5 @@
+import Carousel from "../../components/ui/Carousel";
+
 const Home = () => {
   const products = [
     { id: 1, name: "Glass Bottle", category: "premium", price: "Rs. 1,200" },
@@ -7,11 +9,11 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50">
+    <div className="bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50">
       <div className="flex md:hidden">
         <nav className="bg-sky-400 shadow-lg sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="flex justify-between items-center h-20">
+            <div className="flex justify-evenly items-center h-20">
               <div className="hidden md:flex items-center justify-center space-x-8">
                 <a
                   href="#home"
@@ -45,44 +47,11 @@ const Home = () => {
                 </a>
               </div>
             </div>
-
-            {isMenuOpen && (
-              <div className="md:hidden pb-4 space-y-2">
-                <a
-                  href="#home"
-                  className="block py-2 text-gray-700 hover:text-cyan-600"
-                >
-                  Home
-                </a>
-                <a
-                  href="#shop"
-                  className="block py-2 text-gray-700 hover:text-cyan-600"
-                >
-                  Shop
-                </a>
-                <a
-                  href="#custom"
-                  className="block py-2 text-gray-700 hover:text-cyan-600"
-                >
-                  Custom Bottles
-                </a>
-
-                <a
-                  href="#about"
-                  className="block py-2 text-gray-700 hover:text-cyan-600"
-                >
-                  About Us
-                </a>
-                <a
-                  href="#contact"
-                  className="block py-2 text-gray-700 hover:text-cyan-600"
-                >
-                  Contact
-                </a>
-              </div>
-            )}
           </div>
         </nav>
+      </div>
+      <div className="carousel-section">
+        <Carousel />
       </div>
 
       <section id="shop" className="py-16 bg-white">

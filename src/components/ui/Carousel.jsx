@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import carousel1 from "../../../public/WhatsApp Image 2026-01-07 at 11.05.58 PM.jpeg";
+import { useEffect, useState } from "react";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
