@@ -39,7 +39,7 @@ const PageWrapper = () => {
         </button>
       )}
       <a
-        href="https://wa.me/+92 318 2821473"
+        href="https://wa.me/+923182821473"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:shadow-green-500/50 transform hover:scale-110 transition z-50"
