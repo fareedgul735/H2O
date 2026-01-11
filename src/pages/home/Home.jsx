@@ -10,7 +10,10 @@ const Home = () => {
 
   return (
     <div className="bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50">
-      <div className="flex md:hidden">
+      <div className="carousel-section">
+        <Carousel />
+      </div>
+      <div className="">
         <nav className="bg-sky-400 shadow-lg sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex justify-evenly items-center h-20">
@@ -49,9 +52,6 @@ const Home = () => {
             </div>
           </div>
         </nav>
-      </div>
-      <div className="carousel-section">
-        <Carousel />
       </div>
 
       <section id="shop" className="py-16 bg-white">

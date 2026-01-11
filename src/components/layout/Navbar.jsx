@@ -9,7 +9,7 @@ const Navbar = () => {
     <>
       <nav className="bg-white shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-center items-center h-20">
             <div className="flex items-center">
               <div className="w-14 h-14 bg-gradient-to-br from-sky-400 to-cyan-500 rounded-full flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-xl">H2O</span>
@@ -23,7 +23,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <ShoppingCart className="w-6 h-6 text-gray-700 hover:text-cyan-600 cursor-pointer" />
+              <ShoppingCart className="w-6 h-6 text-gray-700 hover:text-cyan-600 cursor-pointer absolute right-4" />
 
               <button onClick={() => setIsMenuOpen(true)} className="md:hidden">
                 <Menu className="w-6 h-6 absolute left-4" />
