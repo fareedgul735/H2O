@@ -1,25 +1,18 @@
 import { Link } from "react-router-dom";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
+import logo from "../../../public/WhatsApp_Image_2026-01-07_at_11.12.20_AM-removebg-preview.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
-      <nav className="bg-white shadow-lg sticky top-0 z-50">
+      <nav className="bg-sky shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center items-center h-20">
             <div className="flex items-center">
-              <div className="w-14 h-14 bg-gradient-to-br from-sky-400 to-cyan-500 rounded-full flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-xl">H2O</span>
-              </div>
-              <div className="ml-3">
-                <h1 className="text-xl font-bold bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent">
-                  H2O Drop
-                </h1>
-                <p className="text-xs text-gray-600">Premium Water Bottles</p>
-              </div>
+              <img src={logo} alt="" className="w-15" />
             </div>
 
             <div className="flex items-center gap-4">
@@ -45,7 +38,9 @@ const Navbar = () => {
         ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="font-bold text-lg text-cyan-600">Menu</h2>
+          <div className="text-lg text-cyan-600">
+            <img src={logo} className="w-20" />
+          </div>
           <button onClick={() => setIsMenuOpen(false)}>
             <X className="w-5 h-5" />
           </button>
@@ -60,9 +55,6 @@ const Navbar = () => {
           </Link>
           <Link to="/custom" onClick={() => setIsMenuOpen(false)}>
             Custom Bottles
-          </Link>
-          <Link to="/tandoor" onClick={() => setIsMenuOpen(false)}>
-            Tandoor
           </Link>
           <Link to="/about" onClick={() => setIsMenuOpen(false)}>
             About Us

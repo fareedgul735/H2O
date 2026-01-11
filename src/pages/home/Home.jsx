@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import Carousel from "../../components/ui/Carousel";
 
 const Home = () => {
@@ -13,41 +14,29 @@ const Home = () => {
       <div className="carousel-section">
         <Carousel />
       </div>
-      <div className="">
-        <nav className="bg-sky-400 shadow-lg sticky top-0 z-50">
+      <div className="navbar hidden md:flex">
+        <nav className="bg-white w-full shadow-lg sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="flex justify-evenly items-center h-20">
-              <div className="hidden md:flex items-center justify-center space-x-8">
-                <a
-                  href="#home"
-                  className="text-gray-700 hover:text-cyan-600 font-medium transition"
-                >
-                  Home
-                </a>
-                <a
-                  href="#shop"
-                  className="text-gray-700 hover:text-cyan-600 font-medium transition"
-                >
-                  Shop
-                </a>
-                <a
-                  href="#custom"
-                  className="text-gray-700 hover:text-cyan-600 font-medium transition"
-                >
-                  Custom Bottles
-                </a>
-                <a
-                  href="#about"
-                  className="text-gray-700 hover:text-cyan-600 font-medium transition"
-                >
-                  About Us
-                </a>
-                <a
-                  href="#contact"
-                  className="text-gray-700 hover:text-cyan-600 font-medium transition"
-                >
-                  Contact
-                </a>
+            <div className="flex justify-center items-center h-20">
+              <div className="items-center space-x-6">
+                {["Home", "Shop", "Custom Bottles", "About Us", "Contact"].map(
+                  (item, index) => (
+                    <Link
+                      key={index}
+                      href={`#${item.toLowerCase().replace(" ", "")}`}
+                      className="relative px-4 py-2 font-medium text-gray-700
+                transition-all duration-300
+                before:absolute before:inset-0
+                before:border before:border-cyan-500
+                before:scale-0 before:opacity-0
+                before:transition-all before:duration-300
+                hover:before:scale-100 hover:before:opacity-100
+                hover:text-cyan-600"
+                    >
+                      {item}
+                    </Link>
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -85,7 +74,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       <section id="custom" className="py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="bg-gradient-to-r from-cyan-500 to-sky-500 rounded-3xl p-8 mb-12">
