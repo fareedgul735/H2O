@@ -1,11 +1,13 @@
 import { RouterProvider } from "react-router";
 import { clientRoutes } from "./routes/ClientRoutes";
-
+import { CartProvider } from "./context/CardContext";
 
 const App = () => {
   return (
     <>
-      <RouterProvider router={clientRoutes} />
+      <CartProvider>
+        <RouterProvider router={clientRoutes} />
+      </CartProvider>
     </>
   );
 };

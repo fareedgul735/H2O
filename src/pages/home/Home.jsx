@@ -1,12 +1,38 @@
 import { Link } from "react-router";
 import Carousel from "../../components/ui/Carousel";
+import { useCart } from "../../context/CardContext";
+import { useState } from "react";
 
 const Home = () => {
+  const { addToCart } = useCart();
   const products = [
-    { id: 1, name: "Glass Bottle", category: "premium", price: "Rs. 1,200" },
-    { id: 2, name: "Steel Deluxe", category: "premium", price: "Rs. 1,500" },
-    { id: 3, name: "Insulated Pro", category: "premium", price: "Rs. 1,800" },
-    { id: 4, name: "Sports Edition", category: "premium", price: "Rs. 1,400" },
+    {
+      id: 1,
+      img: "",
+      name: "Bottle 500ml",
+      price: 1200,
+      size: "500ml",
+      bottlesPerCarton: 12,
+      minCarton: 1,
+    },
+    {
+      id: 2,
+      img: "",
+      name: "Bottle 1500ml",
+      price: 1500,
+      size: "1500ml",
+      bottlesPerCarton: 6,
+      minCarton: 2,
+    },
+    {
+      id: 3,
+      img: "",
+      name: "Bottle 6 Liter",
+      price: 1800,
+      size: "6L",
+      bottlesPerCarton: 2,
+      minCarton: 3,
+    },
   ];
 
   return (
@@ -35,7 +61,7 @@ const Home = () => {
                     >
                       {item}
                     </Link>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -66,7 +92,15 @@ const Home = () => {
                 <p className="text-cyan-600 font-semibold mb-4">
                   {product.price}
                 </p>
-                <button className="w-full bg-gradient-to-r from-sky-500 to-cyan-500 text-white py-2 rounded-full font-semibold hover:shadow-lg transition">
+                <button
+                  onClick={() =>
+                    addToCart({
+                      ...product,
+                      cartons: product.minCarton,
+                    })
+                  }
+                  className="w-full bg-gradient-to-r from-sky-500 to-cyan-500 text-white py-2 rounded-full font-semibold hover:shadow-lg transition"
+                >
                   Add to Cart
                 </button>
               </div>
