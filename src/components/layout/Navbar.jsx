@@ -5,8 +5,29 @@ import logo from "../../../public/WhatsApp_Image_2026-01-07_at_11.12.20_AM-remov
 import { useCart } from "../../context/CardContext";
 
 const Navbar = () => {
+  const [deleteId, setDeleteId] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cart, removeItem, isCartOpen, setIsCartOpen } = useCart();
+  const {
+    cart,
+    removeItem,
+    decreaseCart,
+    increaseCart,
+    isCartOpen,
+    setIsCartOpen,
+  } = useCart();
+
+  const openDeleteModal = (id) => {
+    setDeleteId(id);
+  };
+
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.price * item.cartons,
+    0,
+  );
+
+  const deliveryFee = cart.length > 0 ? 200 : 0;
+
+  const grandTotal = subtotal + deliveryFee;
 
   return (
     <>
@@ -48,7 +69,7 @@ const Navbar = () => {
           }`}
         >
           <div className="flex items-center justify-between p-5 border-b border-gray-300">
-            <h2 className="text-lg font-semibold">Your Cart</h2>
+            <h2 className="text-lg font-semibold">Shopping Cart</h2>
 
             <div
               className="flex cursor-pointer hover:text-red-500"
@@ -60,48 +81,94 @@ const Navbar = () => {
           </div>
 
           <div className="p-5 space-y-5 overflow-y-auto h-[65%]">
+            {cart.length === 0 && (
+              <div className="flex flex-col items-center justify-center h-full text-center p-6">
+                <div className="text-5xl mb-4">🛒</div>
+
+                <h3 className="text-lg font-semibold mb-2">
+                  Your cart is empty
+                </h3>
+
+                <p className="text-gray-500 text-sm mb-6">
+                  Looks like you haven't added anything yet
+                </p>
+
+                <button
+                  onClick={() => setIsCartOpen(false)}
+                  className="bg-orange-500 text-white px-6 py-3 rounded-xl font-semibold"
+                >
+                  Browse Products
+                </button>
+              </div>
+            )}
+
             {cart.map((item) => (
-              <div
-                key={item.id}
-                className="flex justify-between items-center bg-white shadow p-4 mb-4"
-              >
-                <div>
-                  <h3 className="font-bold">{item.name}</h3>
-                  <p>Size: {item.size}</p>
-                  <p>Cartons: {item.cartons}</p>
-                  <p>Bottles per Carton: {item.bottlesPerCarton}</p>
-                  <p>Cartons: {item.cartons}</p>
-                  <p>Total Bottles: {item.cartons * item.bottlesPerCarton}</p>
-                  <button onClick={() => increaseCart(item.id)}>+</button>
-                  <button onClick={() => decreaseCart(item.id)}>-</button>
+              <>
+                <div
+                  key={item.id}
+                  className="flex justify-between items-center border-b py-4"
+                >
+                  <div className="flex gap-3 items-center">
+                    <img
+                      src={item.img || "/placeholder.png"}
+                      className="w-16 h-16 rounded-lg object-cover"
+                    />
+
+                    <div>
+                      <h4 className="font-semibold">{item.name}</h4>
+                      <p className="text-gray-500 text-sm">{item.size}</p>
+                      <p className="font-semibold">Rs. {item.price}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center border rounded-full px-3 py-1 gap-3">
+                    {item.cartons === item.minCarton ? (
+                      item.minCarton === 1 ? (
+                        <button onClick={() => openDeleteModal(item.id)}>
+                          🗑
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="opacity-40 cursor-not-allowed"
+                        >
+                          -
+                        </button>
+                      )
+                    ) : (
+                      <button onClick={() => decreaseCart(item.id)}>-</button>
+                    )}
+
+                    <span>{item.cartons}</span>
+
+                    <button onClick={() => increaseCart(item.id)}>+</button>
+                  </div>
                 </div>
 
                 <button
-                  onClick={() => removeItem(item.id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  onClick={() => setIsCartOpen(false)}
+                  className="w-full border py-3 rounded-xl mt-3"
                 >
-                  Remove
+                  + Add more items
                 </button>
-              </div>
+              </>
             ))}
-          </div>
+            <div className="pt-4">
+              <div className="flex justify-between">
+                <span>Total</span>
+                <span>Rs. {subtotal}</span>
+              </div>
 
-          <div className="absolute bottom-0 w-full border-t border-gray-300 p-5 bg-white">
-            <div className="flex justify-between mb-4 font-semibold">
-              {/* <span>Subtotal</span>
-              <span>${subtotal}</span> */}
+              <div className="flex justify-between">
+                <span>Delivery Fee</span>
+                <span>Rs. {deliveryFee}</span>
+              </div>
+
+              <div className="flex justify-between font-bold">
+                <span>Grand Total</span>
+                <span>Rs. {grandTotal}</span>
+              </div>
             </div>
-
-            <button className="w-full bg-black text-white py-3 rounded-xl mb-3 hover:opacity-90">
-              Checkout
-            </button>
-
-            <button
-              className="w-full border py-3 rounded-xl"
-              onClick={() => setIsCartOpen(false)}
-            >
-              Continue Shopping
-            </button>
           </div>
         </div>
       </div>
@@ -111,6 +178,34 @@ const Navbar = () => {
           onClick={() => setIsMenuOpen(false)}
           className="fixed inset-0 bg-black/40 z-40"
         />
+      )}
+      {deleteId && (
+        <div className="fixed z-9999999999999 inset-0 bg-black/40 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-xl w-80">
+            <h3 className="font-semibold mb-4 text-center">
+              Remove this item from cart?
+            </h3>
+
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => {
+                  removeItem(deleteId);
+                  setDeleteId(null);
+                }}
+                className="bg-red-500 text-white px-4 py-2 rounded"
+              >
+                Yes Remove
+              </button>
+
+              <button
+                onClick={() => setDeleteId(null)}
+                className="border px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       <div
