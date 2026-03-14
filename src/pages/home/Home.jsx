@@ -1,32 +1,32 @@
 import { Link } from "react-router";
 import Carousel from "../../components/ui/Carousel";
 import { useCart } from "../../context/CardContext";
-import { useState } from "react";
+import picuture from "../../../public/WhatsApp Image 2026-01-07 at 11.05.58 PM.jpeg";
 
 const Home = () => {
   const { addToCart } = useCart();
   const products = [
     {
       id: 1,
-      img: "",
+      img: picuture,
       name: "Bottle 500ml",
       price: 1200,
       size: "500ml",
       bottlesPerCarton: 12,
-      minCarton: 1,
+      minCarton: 5,
     },
     {
       id: 2,
-      img: "",
+      img: picuture,
       name: "Bottle 1500ml",
       price: 1500,
       size: "1500ml",
       bottlesPerCarton: 6,
-      minCarton: 2,
+      minCarton: 4,
     },
     {
       id: 3,
-      img: "",
+      img: picuture,
       name: "Bottle 6 Liter",
       price: 1800,
       size: "6L",

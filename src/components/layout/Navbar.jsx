@@ -25,6 +25,8 @@ const Navbar = () => {
     0,
   );
 
+  console.log(cart, "cart");
+
   const deliveryFee = cart.length > 0 ? 200 : 0;
 
   const grandTotal = subtotal + deliveryFee;
@@ -40,10 +42,13 @@ const Navbar = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <ShoppingCart
-                  className="w-6 h-6 text-gray-700 hover:text-cyan-600 cursor-pointer absolute right-4"
-                  onClick={() => setIsCartOpen(true)}
-                />
+                <div>
+                  <ShoppingCart
+                    className="w-6 h-6 text-gray-700 hover:text-cyan-600 cursor-pointer absolute right-4"
+                    onClick={() => setIsCartOpen(true)}
+                  />
+                  {/* <span>{cart.length}</span> */}
+                </div>
 
                 <button
                   onClick={() => setIsMenuOpen(true)}
@@ -80,7 +85,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="p-5 space-y-5 overflow-y-auto h-[65%]">
+          <div className="p-5 space-y-5 overflow-y-auto ">
             {cart.length === 0 && (
               <div className="flex flex-col items-center justify-center h-full text-center p-6">
                 <div className="text-5xl mb-4">🛒</div>
@@ -123,20 +128,19 @@ const Navbar = () => {
 
                   <div className="flex items-center border rounded-full px-3 py-1 gap-3">
                     {item.cartons === item.minCarton ? (
-                      item.minCarton === 1 ? (
-                        <button onClick={() => openDeleteModal(item.id)}>
-                          🗑
-                        </button>
-                      ) : (
-                        <button
-                          disabled
-                          className="opacity-40 cursor-not-allowed"
-                        >
-                          -
-                        </button>
-                      )
+                      <button
+                        onClick={() => openDeleteModal(item.id)}
+                        className="text-red-500 hover:text-red-600"
+                      >
+                        🗑
+                      </button>
                     ) : (
-                      <button onClick={() => decreaseCart(item.id)}>-</button>
+                      <button
+                        onClick={() => decreaseCart(item.id)}
+                        className="text-gray-700 hover:text-black"
+                      >
+                        -
+                      </button>
                     )}
 
                     <span>{item.cartons}</span>
@@ -144,15 +148,14 @@ const Navbar = () => {
                     <button onClick={() => increaseCart(item.id)}>+</button>
                   </div>
                 </div>
-
-                <button
-                  onClick={() => setIsCartOpen(false)}
-                  className="w-full border py-3 rounded-xl mt-3"
-                >
-                  + Add more items
-                </button>
               </>
             ))}
+            <button
+              onClick={() => setIsCartOpen(false)}
+              className="w-full border py-3 rounded-xl mt-3"
+            >
+              + Add more items
+            </button>
             <div className="pt-4">
               <div className="flex justify-between">
                 <span>Total</span>
@@ -180,11 +183,34 @@ const Navbar = () => {
         />
       )}
       {deleteId && (
-        <div className="fixed z-9999999999999 inset-0 bg-black/40 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-xl w-80">
-            <h3 className="font-semibold mb-4 text-center">
-              Remove this item from cart?
-            </h3>
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white w-[420px] rounded-2xl shadow-2xl p-6 relative animate-scaleIn">
+            {/* Close Button */}
+
+            <button
+              onClick={() => setDeleteId(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Header */}
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-sky-100 text-sky-600 p-2 rounded-lg">🗑</div>
+
+              <h3 className="text-lg font-semibold text-gray-800">
+                Confirm Deletion
+              </h3>
+            </div>
+
+            {/* Message */}
+
+            <p className="text-gray-500 text-sm mb-6">
+              Are you sure you want to remove this product from the cart?
+            </p>
+
+            {/* Buttons */}
 
             <div className="flex justify-center gap-4">
               <button
@@ -192,14 +218,14 @@ const Navbar = () => {
                   removeItem(deleteId);
                   setDeleteId(null);
                 }}
-                className="bg-red-500 text-white px-4 py-2 rounded"
+                className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg font-medium transition"
               >
-                Yes Remove
+                🗑 Remove
               </button>
 
               <button
                 onClick={() => setDeleteId(null)}
-                className="border px-4 py-2 rounded"
+                className="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg font-medium transition"
               >
                 Cancel
               </button>
