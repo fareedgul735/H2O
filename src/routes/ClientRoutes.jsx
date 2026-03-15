@@ -10,6 +10,8 @@ import OurStory from "../pages/InformationPage/OurStoryPage";
 import CustomBottles from "../pages/customBottle/CustomBottles";
 import Shop from "../pages/shop/Shop";
 import ContactPage from "../pages/InformationPage/Contact";
+import Checkout from "../pages/checkout/Checkout";
+import OrderSuccess from "../pages/orderSuccess/OrderSuccess";
 
 export const clientRoutes = createBrowserRouter([
   {
@@ -28,5 +30,13 @@ export const clientRoutes = createBrowserRouter([
       { path: "custom", element: <CustomBottles /> },
       { path: "shop", element: <Shop /> },
     ],
+  },
+  {
+    path: "checkout",
+    element: <Checkout />,
+  },
+  {
+    path: "order-success",
+    element: <OrderSuccess />,
   },
 ]);
