@@ -26,14 +26,6 @@ const Footer = () => {
                   Our Story
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/sustainability"
-                  className="text-gray-400 hover:text-sky-400"
-                >
-                  Sustainability
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -45,13 +37,11 @@ const Footer = () => {
             </p>
             <ul className="space-y-2">
               <li>
-                <Link to="/shop" className="text-gray-400 hover:text-sky-400">
-                  Shop All
-                </Link>
-              </li>
-              <li>
-                <Link to="/custom" className="text-gray-400 hover:text-sky-400">
-                  Custom Bottles
+                <Link
+                  to="/your-design"
+                  className="text-gray-400 hover:text-sky-400"
+                >
+                  Your Design
                 </Link>
               </li>
               <li>
@@ -83,14 +73,6 @@ const Footer = () => {
               <li>
                 <Link to="/faqs" className="text-gray-400 hover:text-sky-400">
                   FAQs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/shipping-returns"
-                  className="text-gray-400 hover:text-sky-400"
-                >
-                  Shipping & Returns
                 </Link>
               </li>
             </ul>

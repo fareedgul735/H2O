@@ -41,17 +41,16 @@ const Home = () => {
     <div className="bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50">
       <Carousel />
 
-      {/* NAVBAR */}
       <div className="hidden md:flex">
         <nav className="bg-white w-full shadow-lg sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex justify-center items-center h-20">
               <div className="space-x-6">
-                {["Home", "Shop", "Custom Bottles", "About Us", "Contact"].map(
+                {["Home","Your-Design", "About", "Contact"].map(
                   (item, index) => (
                     <Link
                       key={index}
-                      to={`#${item.toLowerCase().replace(" ", "")}`}
+                      to={`/${item.toLowerCase().replace(" ", "")}`}
                       className="px-4 py-2 font-medium text-gray-700 hover:text-cyan-600 transition"
                     >
                       {item}

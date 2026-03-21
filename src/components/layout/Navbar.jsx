@@ -45,9 +45,13 @@ const Navbar = () => {
                   <ShoppingCart className="w-6 h-6 text-white" />
                 </div>
 
-                {cart.length > 0 && (
+                {cart.length > 0 ? (
                   <span className="absolute -top-2 -right-2 bg-white text-sky-600 text-xs font-bold px-2 py-[2px] rounded-full shadow">
                     {cart.length}
+                  </span>
+                ) : (
+                  <span className="absolute -top-2 -right-2 bg-white text-sky-600 text-xs font-bold px-2 py-[2px] rounded-full shadow">
+                    {"0"}
                   </span>
                 )}
               </div>

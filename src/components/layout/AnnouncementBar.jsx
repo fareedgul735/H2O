@@ -3,8 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const messages = [
   "🚚 Free Shipping all over Karachi ",
-  "🔥 Winter Sale – Up to 40% Off",
-  "⭐ New Arrivals Just Dropped",
+  "🔥 Summer Sale – Up to 40% Off",
 ];
 
 export default function AnnouncementBar() {
