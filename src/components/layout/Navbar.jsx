@@ -2,20 +2,22 @@ import { Link } from "react-router-dom";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import logo from "../../../public/WhatsApp_Image_2026-01-07_at_11.12.20_AM-removebg-preview.png";
-import { useCart } from "../../context/CardContext";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decreaseCart,
+  increaseCart,
+  removeItem,
+  toggleCart,
+} from "../../store/CartSlice";
 
 const Navbar = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const {
-    cart,
-    removeItem,
-    decreaseCart,
-    increaseCart,
-    isCartOpen,
-    setIsCartOpen,
-  } = useCart();
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart.cart);
+  const isCartOpen = useSelector((state) => state.cart.isCartOpen);
 
   const subtotal = cart.reduce(
     (acc, item) => acc + item.price * item.cartons,
@@ -32,14 +34,11 @@ const Navbar = () => {
       <nav className="bg-sky shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center h-20">
-            {/* Logo */}
             <img src={logo} alt="logo" className="w-16" />
 
-            {/* Right Controls */}
             <div className="ml-auto flex items-center gap-4">
-              {/* Cart Button */}
               <div
-                onClick={() => setIsCartOpen(true)}
+                onClick={() => dispatch(toggleCart(true))}
                 className="relative cursor-pointer"
               >
                 <div className="bg-sky-400 hover:bg-sky-500 p-2 rounded-full">
@@ -53,7 +52,6 @@ const Navbar = () => {
                 )}
               </div>
 
-              {/* Mobile Menu */}
               <button onClick={() => setIsMenuOpen(true)} className="md:hidden">
                 <Menu className="w-6 h-6" />
               </button>
@@ -65,7 +63,7 @@ const Navbar = () => {
       {isCartOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-40"
-          onClick={() => setIsCartOpen(false)}
+          onClick={() => dispatch(toggleCart(false))}
         />
       )}
 
@@ -79,7 +77,7 @@ const Navbar = () => {
 
           <button
             className="flex items-center gap-1 text-gray-600 hover:text-red-500"
-            onClick={() => setIsCartOpen(false)}
+            onClick={() => dispatch(toggleCart(false))}
           >
             <X size={18} />
             Close
@@ -98,7 +96,7 @@ const Navbar = () => {
               </p>
 
               <button
-                onClick={() => setIsCartOpen(false)}
+                onClick={() => dispatch(toggleCart(true))}
                 className="bg-orange-500 text-white px-6 py-3 rounded-xl font-semibold"
               >
                 Browse Products
@@ -133,12 +131,16 @@ const Navbar = () => {
                     🗑
                   </button>
                 ) : (
-                  <button onClick={() => decreaseCart(item.id)}>-</button>
+                  <button onClick={() => dispatch(decreaseCart(item.id))}>
+                    -
+                  </button>
                 )}
 
                 <span>{item.cartons}</span>
 
-                <button onClick={() => increaseCart(item.id)}>+</button>
+                <button onClick={() => dispatch(increaseCart(item.id))}>
+                  +
+                </button>
               </div>
             </div>
           ))}
@@ -146,7 +148,7 @@ const Navbar = () => {
           {cart.length > 0 && (
             <>
               <button
-                onClick={() => setIsCartOpen(false)}
+                onClick={() => dispatch(toggleCart(false))}
                 className="w-full border py-3 rounded-xl"
               >
                 + Add more items
@@ -179,7 +181,7 @@ const Navbar = () => {
       </div>
 
       {deleteId && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[99999999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
           <div className="bg-white w-[420px] rounded-2xl shadow-2xl p-6 relative">
             <button
               onClick={() => setDeleteId(null)}
@@ -203,7 +205,7 @@ const Navbar = () => {
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => {
-                  removeItem(deleteId);
+                  dispatch(removeItem(deleteId));
                   setDeleteId(null);
                 }}
                 className="bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg"

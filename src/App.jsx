@@ -1,13 +1,14 @@
 import { RouterProvider } from "react-router";
 import { clientRoutes } from "./routes/ClientRoutes";
-import { CartProvider } from "./context/CardContext";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 const App = () => {
   return (
     <>
-      <CartProvider>
+      <Provider store={store}>
         <RouterProvider router={clientRoutes} />
-      </CartProvider>
+      </Provider>
     </>
   );
 };

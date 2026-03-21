@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useCart } from "../../context/CardContext";
-import { Link,useNavigate } from "react-router-dom";
 import Footer from "../../components/layout/Footer";
+import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../../store/CartSlice.js";
+import { Link, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { cart } = useCart();
+  const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -16,12 +18,12 @@ const Checkout = () => {
     landmark: "",
     email: "",
     instructions: "",
-    change: ""
+    change: "",
   });
 
   const subtotal = cart.reduce(
     (acc, item) => acc + item.price * item.cartons,
-    0
+    0,
   );
 
   const deliveryFee = cart.length > 0 ? 200 : 0;
@@ -31,7 +33,7 @@ const Checkout = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -48,9 +50,12 @@ const Checkout = () => {
       deliveryFee,
       grandTotal,
       orderNo: Math.random().toString(36).substring(7),
-      orderDate: new Date().toLocaleString()
+      orderDate: new Date().toLocaleString(),
     };
 
+    navigate("/order-success", { state: orderData });
+
+    dispatch(clearCart());
     navigate("/order-success", { state: orderData });
   };
 
@@ -141,7 +146,6 @@ const Checkout = () => {
           </div>
         </div>
 
-
         <div className="space-y-4">
           <div className="bg-white p-4 rounded-xl shadow">
             {cart.length === 0 ? (
@@ -202,7 +206,7 @@ const Checkout = () => {
           )}
 
           {cart.length > 0 && (
-               <button
+            <button
               onClick={handleOrder}
               className="w-full bg-orange-500 text-white py-3 rounded-lg mt-3"
             >
