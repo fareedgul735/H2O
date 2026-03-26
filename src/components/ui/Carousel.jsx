@@ -41,9 +41,9 @@ const Carousel = () => {
   };
 
   return (
-    <section id="home" className="relative w-full h-screen overflow-hidden">
-      <div className="w-full h-full">
-        <div className="absolute inset-0 overflow-hidden rounded-3xl shadow-2xl">
+    <section id="home" className="relative w-full  overflow-hidden">
+      <div className="w-full h-[620px]">
+        <div className="absolute inset-0 overflow-hidden ">
           {carouselItems.map((item, index) => (
             <div
               key={index}
@@ -62,15 +62,6 @@ const Carousel = () => {
               />
 
               <div className="absolute inset-0 bg-black/40"></div>
-
-              {/* <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-                <h4 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
-                  {item.title}
-                </h4>
-                <p className="text-lg md:text-xl text-white/90 max-w-md drop-shadow">
-                  {item.subtitle}
-                </p>
-              </div> */}
             </div>
           ))}
         </div>

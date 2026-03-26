@@ -3,6 +3,7 @@ import Footer from "../../components/layout/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../../store/CartSlice.js";
 import { Link, useNavigate } from "react-router-dom";
+import { addDoc, collection, db } from "../../store/firebase.js";
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart.cart);
@@ -37,7 +38,7 @@ const Checkout = () => {
     });
   };
 
-  const handleOrder = () => {
+  const handleOrder = async () => {
     if (!formData.name || !formData.phone || !formData.address) {
       alert("Please fill required fields");
       return;
@@ -51,12 +52,21 @@ const Checkout = () => {
       grandTotal,
       orderNo: Math.random().toString(36).substring(7),
       orderDate: new Date().toLocaleString(),
+      createdAt: new Date(),
     };
 
-    navigate("/order-success", { state: orderData });
+    try {
+      await addDoc(collection(db, "orders"), orderData);
 
-    dispatch(clearCart());
-    navigate("/order-success", { state: orderData });
+      console.log("Order saved successfully ✅");
+
+      dispatch(clearCart());
+
+      navigate("/order-success", { state: orderData });
+    } catch (error) {
+      console.error("Error saving order ❌", error);
+      alert("Something went wrong!");
+    }
   };
 
   return (

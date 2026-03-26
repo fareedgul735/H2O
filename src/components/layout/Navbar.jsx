@@ -34,7 +34,24 @@ const Navbar = () => {
       <nav className="bg-sky shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center h-20">
-            <img src={logo} alt="logo" className="w-16" />
+            <div className="logo">
+              <img src={logo} alt="logo" className="w-16" />
+            </div>
+            <div className="navlinks">
+              <div className="space-x-6">
+                {["Home", "Your-Design", "About", "Contact"].map(
+                  (item, index) => (
+                    <Link
+                      key={index}
+                      to={`/${item.toLowerCase().replace(" ", "")}`}
+                      className="px-4 py-2 font-medium text-gray-700 hover:text-cyan-600 transition"
+                    >
+                      {item}
+                    </Link>
+                  ),
+                )}
+              </div>
+            </div>
 
             <div className="ml-auto flex items-center gap-4">
               <div

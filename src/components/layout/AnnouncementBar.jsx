@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const messages = [
   "🚚 Free Shipping all over Karachi ",
-  "🔥 Summer Sale – Up to 40% Off",
+  "Dummy Water Bottle WhatsApp Number: 03222156119",
 ];
 
 export default function AnnouncementBar() {
