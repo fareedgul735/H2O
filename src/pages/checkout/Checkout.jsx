@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Footer from "../../components/layout/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../../store/CartSlice.js";
 import { Link, useNavigate } from "react-router-dom";
 import { addDoc, collection, db } from "../../store/firebase.js";
+import { getGuestId } from "../../utils/helper.js";
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart.cart);
@@ -46,6 +47,7 @@ const Checkout = () => {
 
     const orderData = {
       customer: formData,
+      getGuestUserId: getGuestId(),
       items: cart,
       subtotal,
       deliveryFee,

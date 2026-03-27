@@ -1,22 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getGuestId } from "../utils/helper";
 
-// ✅ Load from localStorage
 const loadCart = () => {
   try {
-    const data = localStorage.getItem("cart");
+    const guestId = getGuestId();
+    const data = localStorage.getItem(`cart_${guestId}`);
     return data ? JSON.parse(data) : [];
   } catch (error) {
     return [];
   }
 };
 
-// ✅ Save to localStorage
 const saveCart = (cart) => {
-  try {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  } catch (error) {
-    console.log("Save error", error);
-  }
+  const guestId = getGuestId();
+  localStorage.setItem(`cart_${guestId}`, JSON.stringify(cart));
 };
 
 const initialState = {
@@ -28,7 +25,6 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // 🔥 ADD TO CART
     addToCart: (state, action) => {
       const product = action.payload;
 
@@ -44,13 +40,11 @@ const cartSlice = createSlice({
       state.isCartOpen = true;
     },
 
-    // 🔥 REMOVE ITEM
     removeItem: (state, action) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload);
       saveCart(state.cart);
     },
 
-    // 🔥 INCREASE QUANTITY
     increaseCart: (state, action) => {
       const item = state.cart.find((item) => item.id === action.payload);
 
@@ -60,7 +54,6 @@ const cartSlice = createSlice({
       }
     },
 
-    // 🔥 DECREASE QUANTITY (minCarton safe)
     decreaseCart: (state, action) => {
       const item = state.cart.find((item) => item.id === action.payload);
 
@@ -72,20 +65,18 @@ const cartSlice = createSlice({
       }
     },
 
-    // 🔥 TOGGLE CART SIDEBAR
     toggleCart: (state, action) => {
       state.isCartOpen = action.payload;
     },
 
-    // 🔥 CLEAR CART (Checkout ke baad)
     clearCart: (state) => {
+      const guestId = getGuestId();
       state.cart = [];
-      localStorage.removeItem("cart");
+      localStorage.removeItem(`cart_${guestId}`);
     },
   },
 });
 
-// ✅ EXPORT ACTIONS
 export const {
   addToCart,
   removeItem,
@@ -95,5 +86,4 @@ export const {
   clearCart,
 } = cartSlice.actions;
 
-// ✅ EXPORT REDUCER
 export default cartSlice.reducer;
