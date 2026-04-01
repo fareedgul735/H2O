@@ -12,22 +12,23 @@ const Footer = () => {
               Premium reusable water bottles designed for hydration,
               sustainability, and everyday lifestyle.
             </p>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/about" className="text-gray-400 hover:text-sky-400">
-                  About Us
-                </Link>
-              </li>
-            </ul>
           </div>
 
           <div>
-            <h5 className="font-bold text-lg mb-3 text-sky-400">Shop</h5>
+            <h5 className="font-bold text-lg mb-3 text-sky-400">Explore</h5>
             <p className="text-gray-400 text-sm mb-4">
               Explore durable, stylish, and eco-friendly water bottles for daily
               hydration.
             </p>
             <ul className="space-y-2">
+              <li>
+                <Link
+                  to="/about"
+                  className="text-gray-400 hover:text-sky-400"
+                >
+                  About Us
+                </Link>
+              </li>
               <li>
                 <Link
                   to="/your-design"

@@ -5,7 +5,6 @@ import FAQs from "../pages/InformationPage/Faqs";
 import About from "../pages/InformationPage/About";
 import ContactPage from "../pages/InformationPage/Contact";
 import Checkout from "../pages/checkout/Checkout";
-import OrderSuccess from "../pages/orderSuccess/OrderSuccess";
 import YourDesign from "../pages/YourDesign";
 import BulkOrders from "../pages/BulkOrders";
 
@@ -26,9 +25,5 @@ export const clientRoutes = createBrowserRouter([
   {
     path: "checkout",
     element: <Checkout />,
-  },
-  {
-    path: "order-success",
-    element: <OrderSuccess />,
   },
 ]);

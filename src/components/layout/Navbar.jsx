@@ -1,14 +1,37 @@
 import { Link } from "react-router-dom";
-import { Menu, ShoppingCart, X } from "lucide-react";
+import { Edit, Home, Info, Menu, Phone, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
-import logo from "../../../public/WhatsApp_Image_2026-01-07_at_11.12.20_AM-removebg-preview.png";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import {
   decreaseCart,
   increaseCart,
   removeItem,
   toggleCart,
 } from "../../store/CartSlice";
+
+const navLinks = [
+  {
+    name: "Home",
+    path: "/home",
+    icon: <Home className="w-4 h-4 inline mr-2" />,
+  },
+  {
+    name: "Your Design",
+    path: "/your-design",
+    icon: <Edit className="w-4 h-4 inline mr-2" />,
+  },
+  {
+    name: "About",
+    path: "/about",
+    icon: <Info className="w-4 h-4 inline mr-2" />,
+  },
+  {
+    name: "Contact",
+    path: "/contact",
+    icon: <Phone className="w-4 h-4 inline mr-2" />,
+  },
+];
 
 const Navbar = () => {
   const [deleteId, setDeleteId] = useState(null);
@@ -31,26 +54,30 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-sky shadow-lg sticky top-0 z-50">
+      <nav className="bg-white shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center h-20">
-            <div className="logo">
-              <img src={logo} alt="logo" className="w-16" />
+            <div className="flex-shrink-0">
+              <img src={""} alt="Logo" className="w-16" />
             </div>
-            <div className="navlinks">
-              <div className="space-x-6">
-                {["Home", "Your-Design", "About", "Contact"].map(
-                  (item, index) => (
-                    <Link
-                      key={index}
-                      to={`/${item.toLowerCase().replace(" ", "")}`}
-                      className="px-4 py-2 font-medium text-gray-700 hover:text-cyan-600 transition"
-                    >
-                      {item}
-                    </Link>
-                  ),
-                )}
-              </div>
+
+            <div className="hidden md:flex flex-1 justify-center space-x-6">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.name}
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `relative px-3 py-2 font-medium transition-all duration-300 flex items-center gap-1 ${
+                      isActive
+                        ? "text-sky-400 after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-sky-400"
+                        : "text-gray-700 hover:text-sky-400 hover:after:absolute hover:after:-bottom-1 hover:after:left-0 hover:after:w-full hover:after:h-0.5 hover:after:bg-sky-400"
+                    }`
+                  }
+                >
+                  {link.icon}
+                  {link.name}
+                </NavLink>
+              ))}
             </div>
 
             <div className="ml-auto flex items-center gap-4">
@@ -58,23 +85,19 @@ const Navbar = () => {
                 onClick={() => dispatch(toggleCart(true))}
                 className="relative cursor-pointer"
               >
-                <div className="bg-sky-400 hover:bg-sky-500 p-2 rounded-full">
+                <div className="bg-sky-400 hover:bg-sky-500 p-2 rounded-full transition">
                   <ShoppingCart className="w-6 h-6 text-white" />
                 </div>
-
-                {cart.length > 0 ? (
-                  <span className="absolute -top-2 -right-2 bg-white text-sky-600 text-xs font-bold px-2 py-[2px] rounded-full shadow">
-                    {cart.length}
-                  </span>
-                ) : (
-                  <span className="absolute -top-2 -right-2 bg-white text-sky-600 text-xs font-bold px-2 py-[2px] rounded-full shadow">
-                    {"0"}
-                  </span>
-                )}
+                <span className="absolute -top-2 -right-2 bg-white text-sky-600 text-xs font-bold px-2 py-[2px] rounded-full shadow">
+                  {cart.length || "0"}
+                </span>
               </div>
 
-              <button onClick={() => setIsMenuOpen(true)} className="md:hidden">
-                <Menu className="w-6 h-6" />
+              <button
+                onClick={() => setIsMenuOpen(true)}
+                className="md:hidden p-2 bg-sky-400 flex justify-center items-center rounded-full shadow-md"
+              >
+                <Menu className="w-6 h-6 text-white" />
               </button>
             </div>
           </div>
@@ -118,7 +141,7 @@ const Navbar = () => {
 
               <button
                 onClick={() => dispatch(toggleCart(true))}
-                className="bg-orange-500 text-white px-6 py-3 rounded-xl font-semibold"
+                className="w-full bg-sky-400 cursor-pointer text-white py-3 rounded-lg mt-3 transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
               >
                 Browse Products
               </button>
@@ -191,7 +214,7 @@ const Navbar = () => {
                   <span>Rs. {grandTotal}</span>
                 </div>
                 <Link to={"/checkout"}>
-                  <button className="w-full mt-4 bg-orange-500 text-white py-3 rounded-xl font-semibold">
+                  <button className="w-full bg-sky-400 cursor-pointer text-white py-3 rounded-lg mt-3 transform transition-transform hover:scale-105 flex items-center justify-center gap-2">
                     Checkout
                   </button>
                 </Link>
@@ -253,34 +276,35 @@ const Navbar = () => {
       )}
 
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-white z-50 transform transition-transform duration-300 shadow-lg ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex justify-between items-center p-4 border-b">
-          <img src={logo} className="w-20" />
-
+        <div className="flex justify-between items-center border-gray-300 p-4 border-b">
+          <img src={""} alt="Logo" className="w-20" />
           <button onClick={() => setIsMenuOpen(false)}>
-            <X className="w-5 h-5" />
+            <X className="w-6 h-6 text-gray-700" />
           </button>
         </div>
 
         <nav className="flex flex-col p-4 gap-4 text-gray-700">
-          <Link to="/" onClick={() => setIsMenuOpen(false)}>
-            Home
-          </Link>
-          <Link to="/shop" onClick={() => setIsMenuOpen(false)}>
-            Shop
-          </Link>
-          <Link to="/custom" onClick={() => setIsMenuOpen(false)}>
-            Custom Bottles
-          </Link>
-          <Link to="/about" onClick={() => setIsMenuOpen(false)}>
-            About
-          </Link>
-          <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-            Contact
-          </Link>
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.name}
+              to={link.path}
+              onClick={() => setIsMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center px-3 py-2 rounded-md transition-all duration-300 font-medium ${
+                  isActive
+                    ? "bg-sky-400 text-white shadow-lg"
+                    : "hover:bg-sky-100 hover:text-sky-600"
+                }`
+              }
+            >
+              {link.icon}
+              {link.name}
+            </NavLink>
+          ))}
         </nav>
       </div>
     </>

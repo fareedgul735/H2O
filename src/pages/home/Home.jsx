@@ -1,49 +1,67 @@
-import { Link } from "react-router-dom";
 import Carousel from "../../components/ui/Carousel";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../store/CartSlice.js";
-import picuture from "../../../public/WhatsApp Image 2026-01-07 at 11.05.58 PM.jpeg";
 import { FaShoppingCart, FaEye } from "react-icons/fa";
 import { useState } from "react";
+import { getGuestId } from "../../utils/helper.js";
+import { useEffect } from "react";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { products } from "../../utils/Constant.js";
+import { db } from "../../store/firebase.js";
+import Popup from "../../components/common/PopupMessage.jsx";
+
 const Home = () => {
+  const [orders, setOrders] = useState([]);
+  const [popup, setPopup] = useState(null);
   const dispatch = useDispatch();
   const [hoverBtn, setHoverBtn] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const products = [
-    {
-      id: 1,
-      img: picuture,
-      des: "",
-      name: "Bottle 500ml",
-      price: 1200,
-      size: "500ml",
-      bottlesPerCarton: 12,
-      minCarton: 5,
-    },
-    {
-      id: 2,
-      img: picuture,
-      des: "",
-      name: "Bottle 1500ml",
-      price: 1500,
-      size: "1500ml",
-      bottlesPerCarton: 6,
-      minCarton: 4,
-    },
-    // {
-    //   id: 3,
-    //   img: picuture,
-    //   des: "",
-    //   name: "Bottle 6 Liter",
-    //   price: 1800,
-    //   size: "6L",
-    //   bottlesPerCarton: 2,
-    //   minCarton: 3,
-    // },
-  ];
+
+  const handlePopupLogic = (ordersData) => {
+    const pending = ordersData.filter((o) => o.status === "pending");
+    const rejected = ordersData.filter((o) => o.status === "rejected");
+
+    if (rejected.length > 0) {
+      setPopup({
+        type: "error",
+        message: "Your order was rejected ❌",
+      });
+    } else if (pending.length > 0) {
+      setPopup({
+        type: "warning",
+        message: `You have ${pending.length} pending order(s) ⏳`,
+      });
+    } else {
+      setPopup(null);
+    }
+  };
+
+  useEffect(() => {
+    const guestId = getGuestId();
+
+    const q = query(collection(db, "orders"), where("guestId", "==", guestId));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOrders(data);
+      handlePopupLogic(data);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50">
+      {popup && (
+        <Popup
+          type={popup.type}
+          message={popup.message}
+          onClose={() => setPopup(null)}
+        />
+      )}
       <Carousel />
       <section id="shop" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
@@ -119,7 +137,10 @@ const Home = () => {
                     Add to Cart
                   </span>
 
-                  <FaShoppingCart size={22} className="absolute opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300" />
+                  <FaShoppingCart
+                    size={22}
+                    className="absolute opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"
+                  />
                 </button>
               </div>
             ))}

@@ -8,3 +8,4 @@ export const getGuestId = () => {
 
   return guestId;
 };
+
