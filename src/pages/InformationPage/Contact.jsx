@@ -61,7 +61,7 @@ const Contact = () => {
     <section className="py-20 bg-sky-50">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-4xl font-bold text-sky-600 mb-4 text-center">
-          Contact Bottle Verse 
+          Contact Aqua Forge
         </h1>
         <p className="text-gray-600 text-lg text-center mb-10">
           Have questions about our water bottles or need order support? Send us
@@ -113,7 +113,7 @@ const Contact = () => {
               </label>
               <Phone className="absolute top-11 left-3 text-gray-400" />
               <input
-                type="tel"
+                type="number"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}

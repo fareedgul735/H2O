@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Edit, Home, Info, Menu, Phone, ShoppingCart, X } from "lucide-react";
+import { Edit, Home, Info, Layers, Menu, Phone, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -20,6 +20,11 @@ const navLinks = [
     name: "Your Design",
     path: "/your-design",
     icon: <Edit className="w-4 h-4 inline mr-2" />,
+  },
+  {
+    name: "Bulk Orders",
+    path: "/bulk-orders",
+    icon: <Layers className="w-4 h-4 inline mr-2" />,
   },
   {
     name: "About",

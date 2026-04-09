@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div>
-            <h5 className="font-bold text-lg mb-3 text-sky-400">Brand</h5>
+            <h5 className="font-bold text-lg mb-3 text-sky-400">Aqua Forge</h5>
             <p className="text-gray-400 text-sm mb-4">
               Premium reusable water bottles designed for hydration,
               sustainability, and everyday lifestyle.
@@ -109,7 +109,7 @@ const Footer = () => {
 
         <div className="border-t border-sky-800 mt-10 pt-6 text-center text-gray-400">
           <p>
-            © 2026 H₂O Drop. Crafted for purity, performance & planet-friendly
+            © 2026 Aqua Forge. Crafted for purity, performance & planet-friendly
             hydration.
           </p>
         </div>

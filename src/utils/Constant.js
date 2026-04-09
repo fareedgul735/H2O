@@ -2,28 +2,26 @@ import { getGuestId } from "./helper";
 
 import picuture from "../../public/WhatsApp Image 2026-01-07 at 11.05.58 PM.jpeg";
 
-const productId = getGuestId();
-
 export const products = [
   {
-    id: productId,
+    id: 1,
     img: picuture,
     des: "",
-    name: "Bottle 500ml",
-    price: 1200,
+    name: "500ml",
+    price: 19200,
     size: "500ml",
     bottlesPerCarton: 12,
-    minCarton: 5,
+    minCarton: 50,
   },
   {
-    id: productId,
+    id: 2,
     img: picuture,
     des: "",
-    name: "Bottle 1500ml",
-    price: 1500,
+    name: "1500ml",
+    price: 8400,
     size: "1500ml",
     bottlesPerCarton: 6,
-    minCarton: 4,
+    minCarton: 25,
   },
   // {
   //   id: productId,
@@ -36,6 +34,3 @@ export const products = [
   //   minCarton: 3,
   // },
 ];
-
-
-

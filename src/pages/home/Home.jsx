@@ -55,13 +55,13 @@ const Home = () => {
 
   return (
     <div className="bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50">
-      {popup && (
+      {/* {popup && (
         <Popup
           type={popup.type}
           message={popup.message}
           onClose={() => setPopup(null)}
         />
-      )}
+      )} */}
       <Carousel />
       <section id="shop" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">

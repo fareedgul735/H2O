@@ -116,9 +116,9 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#EFEFEF] flex items-start justify-center px-4 py-12">
+    <div className="min-h-screen bg-sky-50 flex items-start justify-center px-4 py-12">
       <div className="w-full max-w-[620px]">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-7 tracking-tight">
+        <h1 className="text-3xl font-bold text-center text-sky-400 mb-7 tracking-tight">
           Frequently Asked Questions
         </h1>
 
