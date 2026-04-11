@@ -1,60 +1,73 @@
 import { useState } from "react";
+import {
+  MessageCircle,
+  ChevronDown,
+  Search,
+  Droplets,
+  ChevronRight,
+} from "lucide-react";
 
 const faqs = [
   {
-    q: "How do I get started?",
-    a: "When you sign up, you'll start with the Free plan. It's ideal for new teams and allows unlimited team members, but only 1 active editable project at a time. For more advanced features, check out our Basic, Premium, or Enterprise plans.",
+    category: "Getting Started",
+    q: "What exactly does Aqua Forge do?",
+    a: "Aqua Forge is a custom water bottle manufacturer and brand builder. We help businesses, entrepreneurs, and individuals create their own branded water bottles — from logo printing and custom colors to full-scale bulk production. We also build complete e-commerce stores with admin panels for those who want to sell their own bottle brand online.",
   },
   {
-    q: "What is included in the Free Plan?",
-    a: "The Free plan includes unlimited team members, access to core features, 1 active editable project, and up to 5 GB of storage. It's perfect for individuals and small teams just getting started.",
+    category: "Getting Started",
+    q: "How do I start my own water bottle brand with Aqua Forge?",
+    a: "It's simple. Contact us via WhatsApp or our contact form, share your brand idea, and our team will guide you through the design process, material selection, and production timeline.",
   },
   {
-    q: "How do I cancel my membership?",
-    a: "You can cancel your membership at any time from your Account Settings page. Navigate to Billing → Subscription and click 'Cancel Plan'. Your access will remain active until the end of the billing period.",
+    category: "Customization",
+    q: "What customization options are available for bottles?",
+    a: "We offer full customization including logo, colors, bottle shape, cap style, materials, and sizes.",
   },
   {
-    q: "How do I transfer my membership to a different account?",
-    a: "Membership transfers are handled by our support team. Please contact us with your current account email and the email of the account you'd like to transfer to, and we'll process it within 2 business days.",
+    category: "Customization",
+    q: "What is the minimum order quantity?",
+    a: "Minimum order starts at 50 units. Bulk pricing available for larger quantities.",
   },
   {
-    q: "What is the refund policy?",
-    a: "We offer a 30-day money-back guarantee for all paid plans. If you're not satisfied, reach out to support within 30 days of your purchase and we'll issue a full refund — no questions asked.",
+    category: "Online Store",
+    q: "Can you build an online store?",
+    a: "Yes — we build full e-commerce stores with admin panels so you can manage everything easily.",
   },
   {
-    q: "Can I upgrade or downgrade my plan?",
-    a: "Yes, you can change your plan at any time. Upgrades take effect immediately with prorated billing. Downgrades are applied at the start of the next billing cycle.",
+    category: "Shipping & Delivery",
+    q: "Do you deliver across Pakistan?",
+    a: "Yes, we deliver nationwide with fast shipping options.",
+  },
+  {
+    category: "Quality & Materials",
+    q: "Are bottles BPA-free?",
+    a: "Yes, all bottles are BPA-free and food-grade certified.",
   },
 ];
 
-function SearchIcon() {
-  return (
-    <svg
-      className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-      width="16"
-      height="16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-    </svg>
-  );
-}
+const categories = [
+  "All",
+  "Getting Started",
+  "Customization",
+  "Online Store",
+  "Shipping & Delivery",
+  "Quality & Materials",
+];
+
+const INITIAL_SHOW = 4;
 
 function FAQItem({ item, isOpen, onClick, searchTerm }) {
   const highlight = (text) => {
     if (!searchTerm.trim()) return text;
+
     const regex = new RegExp(
       `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
       "gi",
     );
-    const parts = text.split(regex);
-    return parts.map((part, i) =>
+
+    return text.split(regex).map((part, i) =>
       regex.test(part) ? (
-        <mark key={i} className="bg-yellow-200 rounded px-0.5">
+        <mark key={i} className="bg-yellow-200 px-1 rounded">
           {part}
         </mark>
       ) : (
@@ -66,94 +79,140 @@ function FAQItem({ item, isOpen, onClick, searchTerm }) {
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-2xl px-6 py-5 cursor-pointer transition-all duration-300 select-none
-        ${isOpen ? "shadow-lg" : "shadow-sm hover:shadow-md hover:-translate-y-0.5"}`}
+      className={`bg-white rounded-2xl border cursor-pointer transition-all ${
+        isOpen ? "border-sky-200 shadow-sm" : "border-gray-100"
+      }`}
     >
-      <div className="flex items-center justify-between gap-3">
-        <span className="text-[15px] font-medium text-gray-900 leading-snug">
-          {highlight(item.q)}
-        </span>
-
-        <div
-          className={`w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 text-xl leading-none
-            transition-all duration-300
-            ${
-              isOpen
-                ? "bg-gray-900 border-gray-900 text-white rotate-45"
-                : "border-gray-300 text-gray-500"
+      <div className="flex justify-between px-5 py-4">
+        <div className="flex gap-3">
+          <div
+            className={`w-6 h-6 rounded-lg flex items-center justify-center ${
+              isOpen ? "bg-sky-500" : "bg-gray-100"
             }`}
-        >
-          +
+          >
+            <MessageCircle
+              className={`w-3 h-3 ${isOpen ? "text-white" : "text-gray-400"}`}
+            />
+          </div>
+
+          <span className="text-sm font-medium text-gray-800">
+            {highlight(item.q)}
+          </span>
         </div>
+
+        <ChevronDown
+          className={`w-4 h-4 transition ${
+            isOpen ? "rotate-180 text-sky-500" : "text-gray-400"
+          }`}
+        />
       </div>
 
-      <div
-        className={`overflow-hidden transition-all duration-400 ease-in-out
-          ${isOpen ? "max-h-96 opacity-100 mt-3" : "max-h-0 opacity-0"}`}
-      >
-        <p className="text-sm text-gray-500 leading-relaxed">
-          {highlight(item.a)}
-        </p>
-      </div>
+      {isOpen && (
+        <div className="px-5 pb-5 ml-9">
+          <p className="text-sm text-gray-500 mb-3">{highlight(item.a)}</p>
+
+          <a
+            href="/contact"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1 text-xs text-sky-500 hover:text-sky-600"
+          >
+            Still have questions?
+            <ChevronRight className="w-3 h-3" />
+          </a>
+        </div>
+      )}
     </div>
   );
 }
 
 export default function FAQPage() {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(null);
   const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [showAll, setShowAll] = useState(false);
 
   const filtered = faqs.filter((item) => {
-    const term = search.toLowerCase().trim();
-    if (!term) return true;
+    const term = search.toLowerCase();
+
     return (
-      item.q.toLowerCase().includes(term) || item.a.toLowerCase().includes(term)
+      (!term ||
+        item.q.toLowerCase().includes(term) ||
+        item.a.toLowerCase().includes(term)) &&
+      (activeCategory === "All" || item.category === activeCategory)
     );
   });
 
-  const handleToggle = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const displayed =
+    showAll || search ? filtered : filtered.slice(0, INITIAL_SHOW);
 
   return (
-    <div className="min-h-screen bg-sky-50 flex items-start justify-center px-4 py-12">
-      <div className="w-full max-w-[620px]">
-        <h1 className="text-3xl font-bold text-center text-sky-400 mb-7 tracking-tight">
-          Frequently Asked Questions
-        </h1>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero */}
+      <div className="bg-white py-12 text-center">
+        <Droplets className="mx-auto mb-3 text-sky-500" />
+        <h1 className="text-2xl font-bold mb-2">Frequently Asked Questions</h1>
 
-        <div className="relative mb-7">
-          <SearchIcon />
-          <input
-            type="search"
-            placeholder="Search for a question…"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setOpenIndex(null);
-            }}
-            className="w-full pl-10 pr-4 py-3 rounded-full border border-gray-200 bg-white
-              text-sm text-gray-700 placeholder-gray-400 outline-none
-              focus:border-gray-400 focus:ring-2 focus:ring-black/5 transition-all"
-          />
+        <input
+          type="search"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="mt-4 px-4 py-2 border rounded-lg w-full max-w-md"
+        />
+      </div>
+
+      <div className="max-w-2xl mx-auto p-4">
+        {/* Categories */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-3 py-1 rounded-full text-xs ${
+                activeCategory === cat
+                  ? "bg-sky-500 text-white"
+                  : "bg-white border"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
 
-        <div className="flex flex-col gap-2.5">
-          {filtered.length > 0 ? (
-            filtered.map((item, index) => (
-              <FAQItem
-                key={index}
-                item={item}
-                isOpen={openIndex === index}
-                onClick={() => handleToggle(index)}
-                searchTerm={search}
-              />
-            ))
-          ) : (
-            <p className="text-center text-gray-400 text-sm mt-8">
-              No questions match your search.
-            </p>
-          )}
+        {/* FAQ */}
+        <div className="flex flex-col gap-3">
+          {displayed.map((item, i) => (
+            <FAQItem
+              key={i}
+              item={item}
+              isOpen={openIndex === i}
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              searchTerm={search}
+            />
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-10 text-center bg-sky-500 p-6 rounded-xl">
+          <h3 className="text-white font-semibold mb-2">Still need help?</h3>
+
+          <div className="flex justify-center gap-3">
+            <a
+              href="/contact"
+              className="bg-white text-sky-600 px-4 py-2 rounded"
+            >
+              Contact
+            </a>
+
+            <a
+              href="https://wa.me/923183516990"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-sky-400 text-white px-4 py-2 rounded"
+            >
+              WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </div>

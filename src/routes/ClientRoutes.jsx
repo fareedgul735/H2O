@@ -7,6 +7,7 @@ import ContactPage from "../pages/InformationPage/Contact";
 import Checkout from "../pages/checkout/Checkout";
 import YourDesign from "../pages/YourDesign";
 import BulkOrders from "../pages/BulkOrders";
+import Products from "../pages/products/Products";
 
 export const clientRoutes = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ export const clientRoutes = createBrowserRouter([
       { path: "home", element: <Home /> },
       { path: "faqs", element: <FAQs /> },
       { path: "about", element: <About /> },
+      { path: "products", element: <Products /> },
       { path: "bulk-orders", element: <BulkOrders /> },
       { path: "your-design", element: <YourDesign /> },
       { path: "contact", element: <ContactPage /> },

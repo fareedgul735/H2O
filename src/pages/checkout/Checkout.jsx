@@ -10,6 +10,8 @@ import ScrollOnTop from "../../utils/ScrollOnTop.js";
 import Popup from "../../components/common/PopupMessage.jsx";
 import { ButtonLoader } from "../../components/common/Loader.jsx";
 
+const PHONE_REGEX = /^\d{11}$/;
+
 const Checkout = () => {
   const [formData, setFormData] = useState({
     title: "",
@@ -20,9 +22,9 @@ const Checkout = () => {
     landmark: "",
     email: "",
     instructions: "",
-    change: "",
   });
 
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [popup, setPopup] = useState({
     show: false,
@@ -42,27 +44,34 @@ const Checkout = () => {
   const grandTotal = subtotal + deliveryFee;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const validateFields = () => {
-    const requiredFields = ["name", "phone", "address"];
-    const emptyFields = requiredFields.filter(
-      (field) => !formData[field].trim(),
-    );
-    return emptyFields;
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = "Full name is required.";
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required.";
+    } else if (!PHONE_REGEX.test(formData.phone.trim())) {
+      newErrors.phone = "Phone number must be exactly 11 digits.";
+    }
+    if (!formData.address.trim()) newErrors.address = "Address is required.";
+    if (
+      formData.altPhone.trim() &&
+      !PHONE_REGEX.test(formData.altPhone.trim())
+    ) {
+      newErrors.altPhone = "Alternate phone must be exactly 11 digits.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleOrder = async () => {
-    const emptyFields = validateFields();
-    if (emptyFields.length > 0) {
-      setPopup({
-        show: true,
-        type: "error",
-        message: "Please fill all required fields",
-      });
-      return;
-    }
+    if (!validate()) return;
 
     setLoading(true);
     const guestId = getGuestId();
@@ -89,167 +98,223 @@ const Checkout = () => {
       });
       setTimeout(() => navigate("/home"), 1500);
     } catch (error) {
-      console.error("Error saving order ❌", error);
+      console.error("Error saving order", error);
       setPopup({ show: true, type: "error", message: "Something went wrong!" });
     } finally {
       setLoading(false);
     }
   };
 
+  const fieldClass = (name) =>
+    `border rounded-lg pl-10 pr-4 py-3 w-full text-sm transition-colors duration-200 focus:outline-none focus:ring-2 ${
+      errors[name]
+        ? "border-red-400 focus:ring-red-300 bg-red-50"
+        : "border-gray-200 focus:ring-sky-300 bg-gray-50 hover:border-gray-300 focus:bg-white"
+    }`;
+
+  const iconClass = (name) =>
+    `absolute top-3.5 left-3 w-4 h-4 ${errors[name] ? "text-red-400" : "text-gray-400"}`;
+
+  const FieldWrapper = ({ label, required, name, children }) => (
+    <div className="flex flex-col gap-1">
+      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+        {label}
+        {required && <span className="text-red-400 ml-1">*</span>}
+      </label>
+      <div className="relative">{children}</div>
+      {errors[name] && (
+        <p className="text-xs text-red-500 mt-0.5">{errors[name]}</p>
+      )}
+    </div>
+  );
+
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       <ScrollOnTop />
-      <div className="flex justify-center py-6">
+
+      <div className="flex justify-center py-6 border-b border-gray-100 bg-white">
         <img
           src="https://dummyimage.com/100x100/000/fff&text=LOGO"
-          className="w-20"
+          className="w-16"
         />
       </div>
 
-      <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 px-4 pb-16">
-        <div className="md:col-span-2 bg-white p-6 rounded-xl shadow">
-          <h2 className="text-xl font-bold mb-1">Checkout</h2>
-          <p className="text-gray-500 text-sm mb-6">
-            This is a <b>Delivery Order 🚚</b>
-            <br />
-            Just a last step, please enter your details:
-          </p>
+      <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 px-4 py-8 pb-16">
+        {/* Left — Form */}
+        <div className="md:col-span-2 space-y-6">
+          <div className="bg-white p-6 rounded-2xl border border-gray-100">
+            <h2 className="text-lg font-semibold text-gray-800 mb-1">
+              Delivery Details
+            </h2>
+            <p className="text-sm text-gray-400 mb-6">
+              Enter your info below and we'll deliver to your doorstep.
+            </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <select
-              name="title"
-              onChange={handleChange}
-              className="border p-3 rounded-lg focus:ring-2 focus:ring-sky-400"
-            >
-              <option>Title</option>
-              <option>Mr</option>
-              <option>Mrs</option>
-            </select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Title */}
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                  Title
+                </label>
+                <select
+                  name="title"
+                  onChange={handleChange}
+                  className="border border-gray-200 rounded-lg px-3 py-3 text-sm bg-gray-50 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-300 focus:bg-white transition-colors duration-200"
+                >
+                  <option value="">Select title</option>
+                  <option value="Mr">Mr</option>
+                  <option value="Mrs">Mrs</option>
+                </select>
+              </div>
 
-            <div className="relative">
-              <User className="absolute top-3 left-3 text-gray-400" />
-              <input
-                name="name"
-                placeholder="Full Name *"
-                onChange={handleChange}
-                className={`border p-3 rounded-lg pl-10 w-full focus:ring-2 focus:ring-sky-400 ${
-                  !formData.name && popup.show && "border-red-500"
-                }`}
-              />
+              {/* Name */}
+              <FieldWrapper label="Full Name" required name="name">
+                <User className={iconClass("name")} />
+                <input
+                  name="name"
+                  value={formData.name}
+                  placeholder="e.g. Ali Hassan"
+                  onChange={handleChange}
+                  className={fieldClass("name")}
+                />
+              </FieldWrapper>
+
+              {/* Phone */}
+              <FieldWrapper label="Phone Number" required name="phone">
+                <Phone className={iconClass("phone")} />
+                <input
+                  name="phone"
+                  value={formData.phone}
+                  placeholder="03xxxxxxxxx"
+                  onChange={handleChange}
+                  maxLength={11}
+                  className={fieldClass("phone")}
+                />
+              </FieldWrapper>
+
+              {/* Alt Phone */}
+              <FieldWrapper label="Alternate Phone" name="altPhone">
+                <Phone className={iconClass("altPhone")} />
+                <input
+                  name="altPhone"
+                  value={formData.altPhone}
+                  placeholder="03xxxxxxxxx (optional)"
+                  onChange={handleChange}
+                  maxLength={11}
+                  className={fieldClass("altPhone")}
+                />
+              </FieldWrapper>
             </div>
 
-            <div className="relative">
-              <Phone className="absolute top-3 left-3 text-gray-400" />
-              <input
-                name="phone"
-                placeholder="03xx-xxxxxxx *"
-                onChange={handleChange}
-                className={`border p-3 rounded-lg pl-10 w-full focus:ring-2 focus:ring-sky-400 ${
-                  !formData.phone && popup.show && "border-red-500"
-                }`}
-              />
+            {/* Address */}
+            <div className="mt-4">
+              <FieldWrapper label="Complete Address" required name="address">
+                <MapPin className={iconClass("address")} />
+                <input
+                  name="address"
+                  value={formData.address}
+                  placeholder="House no, Street, Area, City"
+                  onChange={handleChange}
+                  className={fieldClass("address")}
+                />
+              </FieldWrapper>
             </div>
 
-            <div className="relative">
-              <Phone className="absolute top-3 left-3 text-gray-400" />
-              <input
-                name="altPhone"
-                placeholder="Alternate Phone"
-                onChange={handleChange}
-                className="border p-3 rounded-lg pl-10 w-full focus:ring-2 focus:ring-sky-400"
-              />
-            </div>
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              {/* Landmark */}
+              <FieldWrapper label="Nearest Landmark" name="landmark">
+                <MapPin className={iconClass("landmark")} />
+                <input
+                  name="landmark"
+                  value={formData.landmark}
+                  placeholder="e.g. Near Askari Bank"
+                  onChange={handleChange}
+                  className={fieldClass("landmark")}
+                />
+              </FieldWrapper>
 
-          <div className="mt-4 relative">
-            <MapPin className="absolute top-3 left-3 text-gray-400" />
-            <input
-              name="address"
-              placeholder="Complete Address *"
-              onChange={handleChange}
-              className={`border p-3 rounded-lg pl-10 w-full focus:ring-2 focus:ring-sky-400 ${
-                !formData.address && popup.show && "border-red-500"
-              }`}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div className="relative">
-              <MapPin className="absolute top-3 left-3 text-gray-400" />
-              <input
-                name="landmark"
-                placeholder="Nearest Landmark"
-                onChange={handleChange}
-                className="border p-3 rounded-lg pl-10 w-full focus:ring-2 focus:ring-sky-400"
-              />
+              {/* Email */}
+              <FieldWrapper label="Email" name="email">
+                <Mail className={iconClass("email")} />
+                <input
+                  name="email"
+                  value={formData.email}
+                  placeholder="you@example.com (optional)"
+                  onChange={handleChange}
+                  className={fieldClass("email")}
+                />
+              </FieldWrapper>
             </div>
 
-            <div className="relative">
-              <Mail className="absolute top-3 left-3 text-gray-400" />
-              <input
-                name="email"
-                placeholder="Email"
-                onChange={handleChange}
-                className="border p-3 rounded-lg pl-10 w-full focus:ring-2 focus:ring-sky-400"
-              />
+            {/* Instructions */}
+            <div className="mt-4">
+              <FieldWrapper label="Delivery Instructions" name="instructions">
+                <Info className={iconClass("instructions")} />
+                <input
+                  name="instructions"
+                  value={formData.instructions}
+                  placeholder="Any special instructions for delivery..."
+                  onChange={handleChange}
+                  className={fieldClass("instructions")}
+                />
+              </FieldWrapper>
             </div>
-          </div>
-
-          <div className="mt-4 relative">
-            <Info className="absolute top-3 left-3 text-gray-400" />
-            <input
-              name="instructions"
-              placeholder="Delivery Instructions"
-              onChange={handleChange}
-              className="border p-3 rounded-lg pl-10 w-full focus:ring-2 focus:ring-sky-400"
-            />
           </div>
         </div>
 
+        {/* Right — Order Summary */}
         <div className="space-y-4">
-          <div className="bg-white p-4 rounded-xl shadow">
+          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+            <div className="px-4 py-3 border-b border-gray-100">
+              <h3 className="text-sm font-semibold text-gray-700">
+                Order Summary
+              </h3>
+            </div>
+
             {cart.length === 0 ? (
-              <div className="text-center py-6">No items yet</div>
+              <div className="text-center py-10 text-sm text-gray-400">
+                Your cart is empty
+              </div>
             ) : (
-              cart.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between border-b py-3"
-                >
-                  <div className="flex items-center gap-3">
+              <div className="divide-y divide-gray-50">
+                {cart.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center gap-3 px-4 py-3"
+                  >
                     <img
                       src={item.img}
                       alt={item.name}
-                      className="w-14 h-14 object-cover rounded-lg border"
+                      className="w-12 h-12 object-cover rounded-lg border border-gray-100 flex-shrink-0"
                     />
-                    <div>
-                      <p className="font-medium text-sm">{item.name}</p>
-                      <p className="text-gray-500 text-xs">{item.size}</p>
-                      <p className="text-xs text-gray-500">
-                        Qty: {item.cartons}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-800 truncate">
+                        {item.name}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {item.size} · Qty: {item.cartons}
                       </p>
                     </div>
+                    <div className="text-sm font-semibold text-gray-700 flex-shrink-0">
+                      Rs. {item.price * item.cartons}
+                    </div>
                   </div>
-                  <div className="font-semibold text-sm">
-                    Rs. {item.price * item.cartons}
-                  </div>
-                </div>
-              ))
+                ))}
+              </div>
             )}
           </div>
 
           {cart.length > 0 && (
-            <div className="bg-white p-4 rounded-xl shadow">
-              <h3 className="font-semibold mb-3">Your Order</h3>
-              <div className="flex justify-between text-sm">
-                <span>Total</span>
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 space-y-2">
+              <div className="flex justify-between text-sm text-gray-500">
+                <span>Subtotal</span>
                 <span>Rs. {subtotal}</span>
               </div>
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-sm text-gray-500">
                 <span>Delivery Fee</span>
                 <span>Rs. {deliveryFee}</span>
               </div>
-              <div className="flex justify-between font-bold mt-2">
+              <div className="flex justify-between text-sm font-semibold text-gray-800 pt-2 border-t border-gray-100">
                 <span>Grand Total</span>
                 <span>Rs. {grandTotal}</span>
               </div>
@@ -259,15 +324,18 @@ const Checkout = () => {
           {cart.length > 0 && (
             <button
               onClick={handleOrder}
-              className="w-full bg-sky-400 cursor-pointer text-white py-3 rounded-lg mt-3 transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
               disabled={loading}
+              className="w-full cursor-pointer bg-sky-500 hover:bg-sky-600 active:scale-95 text-white py-3 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-sm"
             >
               {loading ? <ButtonLoader color="white" /> : "Place Order"}
             </button>
           )}
 
-          <Link to="/home" className="text-blue-600 text-sm block text-center">
-            ← continue to add more items
+          <Link
+            to="/home"
+            className="text-sky-500 hover:text-sky-600 text-sm block text-center transition-colors"
+          >
+            ← Continue shopping
           </Link>
         </div>
       </div>

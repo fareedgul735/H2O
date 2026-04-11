@@ -36,7 +36,6 @@ export default function YourDesign() {
         </p>
       </div>
 
-      {/* Steps */}
       <div className="grid md:grid-cols-4 gap-4 text-center mb-10">
         <div className="bg-sky-50 p-4 rounded">1. Choose Bottle</div>
         <div className="bg-sky-50 p-4 rounded">2. Add Design</div>
@@ -44,7 +43,7 @@ export default function YourDesign() {
         <div className="bg-sky-50 p-4 rounded">4. We Create 🚀</div>
       </div>
 
-      {/* Options */}
+
       <div className="grid md:grid-cols-3 gap-6 mb-10">
         <div className="p-4 border rounded text-center">
           🧴 Bottle Type
@@ -108,7 +107,6 @@ export default function YourDesign() {
         </button>
       </form>
 
-      {/* CTA */}
       <div className="text-center mt-10">
         <h2 className="text-xl font-semibold">
           Start Your Bottle Brand Today 🚀
