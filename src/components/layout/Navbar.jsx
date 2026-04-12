@@ -134,7 +134,7 @@ const Navbar = () => {
 
       {/* ── CART DRAWER ── */}
       <div
-        className={`fixed  top-0 right-0 h-full w-full sm:w-96 bg-white z-999999999999990 flex flex-col transform transition-transform duration-300 ease-in-out ${
+        className={`fixed  top-0 right-0 h-full w-full sm:w-96 bg-white z-99 flex flex-col transform transition-transform duration-300 ease-in-out ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
