@@ -60,9 +60,8 @@ const Footer = () => {
             </h5>
             <ul className="space-y-3">
               {[
+                { label: "Home", to: "/home" },
                 { label: "About Us", to: "/about" },
-                { label: "Your Design", to: "/your-design" },
-                { label: "Bulk Orders", to: "/bulk-orders" },
                 { label: "Products", to: "/products" },
               ].map(({ label, to }) => (
                 <li key={to}>

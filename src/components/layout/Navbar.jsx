@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import {
-  Edit,
   Home,
   Info,
-  Layers,
   Menu,
   Phone,
   ShoppingCart,
@@ -13,6 +11,7 @@ import {
   Plus,
   Minus,
   ChevronRight,
+  Package,
 } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,8 +25,7 @@ import {
 
 const navLinks = [
   { name: "Home", path: "/home", icon: Home },
-  { name: "Your Design", path: "/your-design", icon: Edit },
-  { name: "Bulk Orders", path: "/bulk-orders", icon: Layers },
+  { name: "Products", path: "/products", icon: Package },
   { name: "About", path: "/about", icon: Info },
   { name: "Contact", path: "/contact", icon: Phone },
 ];
@@ -63,7 +61,6 @@ const Navbar = () => {
               </span>
             </Link>
 
-            {/* Desktop Links */}
             <div className="hidden md:flex flex-1 justify-center items-center gap-1">
               {navLinks.map((link) => {
                 const Icon = link.icon;
@@ -98,7 +95,7 @@ const Navbar = () => {
               {/* Cart button */}
               <button
                 onClick={() => dispatch(toggleCart(true))}
-                className="relative flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white pl-3 pr-4 py-2 rounded-xl text-sm font-medium transition-all duration-200"
+                className="relative cursor-pointer flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white pl-3 pr-4 py-2 rounded-xl text-sm font-medium transition-all duration-200"
               >
                 <ShoppingCart className="w-4 h-4" />
                 <span className="hidden sm:inline">Cart</span>

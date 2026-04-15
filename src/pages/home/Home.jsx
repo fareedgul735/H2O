@@ -155,6 +155,22 @@ const Home = () => {
   const [added, setAdded] = useState({});
   const dispatch = useDispatch();
 
+  const phoneNumber = "923183516990";
+
+  const handleDesignClick = () => {
+    const message = encodeURIComponent(
+      "Hi, I want to design my own bottle. Here are my requirements:\n- Color: \n- Logo: \n- Quantity: \n",
+    );
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  };
+
+  const handleBulkClick = () => {
+    const message = encodeURIComponent(
+      "Hi, I want to place a bulk order.\nPlease share pricing for:\n- Quantity: \n- Delivery location: \n",
+    );
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  };
+
   useEffect(() => {
     const guestId = getGuestId();
     const q = query(collection(db, "orders"), where("guestId", "==", guestId));
@@ -174,10 +190,7 @@ const Home = () => {
 
   return (
     <div className="bg-white">
-      {/* Carousel */}
       <Carousel />
-
-      {/* Perks bar */}
       <div className="bg-sky-500 py-3 px-4">
         <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-x-8 gap-y-2">
           {perks.map(({ icon: Icon, text }) => (
@@ -191,11 +204,8 @@ const Home = () => {
           ))}
         </div>
       </div>
-
-      {/* Products section */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
-          {/* Section header */}
           <div className="flex items-end justify-between mb-8">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -215,14 +225,12 @@ const Home = () => {
               View all <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {products.map((product) => (
               <div
                 key={product.id}
                 className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:border-sky-200 hover:shadow-md transition-all duration-200 flex flex-col group"
               >
-                {/* Image */}
                 <div className="relative aspect-square overflow-hidden bg-gray-50">
                   <img
                     src={product.img}
@@ -232,20 +240,19 @@ const Home = () => {
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
                     <button
                       onClick={() => setSelectedProduct(product)}
-                      className="w-9 h-9 bg-white rounded-xl flex items-center justify-center shadow-sm hover:bg-sky-50 transition active:scale-95"
+                      className="w-9 h-9 cursor-pointer bg-white rounded-xl flex items-center justify-center shadow-sm hover:bg-sky-50 transition active:scale-95"
                     >
                       <Eye className="w-4 h-4 text-gray-700" />
                     </button>
                     <button
                       onClick={() => handleAdd(product)}
-                      className="w-9 h-9 bg-sky-500 rounded-xl flex items-center justify-center shadow-sm hover:bg-sky-600 transition active:scale-95"
+                      className="w-9 h-9 cursor-pointer bg-sky-500 rounded-xl flex items-center justify-center shadow-sm hover:bg-sky-600 transition active:scale-95"
                     >
                       <ShoppingCart className="w-4 h-4 text-white" />
                     </button>
                   </div>
                 </div>
 
-                {/* Info */}
                 <div className="p-3 flex flex-col flex-1">
                   <p className="text-xs text-gray-400 mb-0.5">
                     {product.size || "500ml"}
@@ -263,7 +270,7 @@ const Home = () => {
                     </p>
                     <button
                       onClick={() => handleAdd(product)}
-                      className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 active:scale-95 ${
+                      className={`flex items-center cursor-pointer gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 active:scale-95 ${
                         added[product.id]
                           ? "bg-emerald-500 text-white"
                           : "bg-sky-500 hover:bg-sky-600 text-white"
@@ -284,8 +291,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Custom + Bulk CTA */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
@@ -296,9 +301,7 @@ const Home = () => {
               Build Your Brand With Us
             </h2>
           </div>
-
           <div className="grid md:grid-cols-2 gap-5">
-            {/* Design your own */}
             <div className="relative bg-sky-50 border border-sky-100 rounded-2xl p-7 overflow-hidden group hover:border-sky-300 transition-all duration-200">
               <div className="absolute right-4 top-4 w-20 h-20 bg-sky-100 rounded-2xl flex items-center justify-center opacity-60 group-hover:opacity-100 transition">
                 <Palette className="w-9 h-9 text-sky-400" />
@@ -314,15 +317,14 @@ const Home = () => {
                   Create a custom bottle with your logo, colors, and style.
                   Perfect for personal brands, events, and gifting.
                 </p>
-                <Link to="/your-design">
-                  <button className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200">
-                    Start Designing <ChevronRight className="w-4 h-4" />
-                  </button>
-                </Link>
+                <button
+                  onClick={handleDesignClick}
+                  className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
+                >
+                  Start Designing <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
-
-            {/* Bulk orders */}
             <div className="relative bg-gray-900 rounded-2xl p-7 overflow-hidden group hover:bg-gray-800 transition-all duration-200">
               <div className="absolute right-4 top-4 w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center opacity-60 group-hover:opacity-100 transition">
                 <Package className="w-9 h-9 text-white/40" />
@@ -338,18 +340,17 @@ const Home = () => {
                   Order 20+ cartons and get free units. Best for corporate
                   events, retail stores, and brand launches.
                 </p>
-                <Link to="/bulk-orders">
-                  <button className="flex items-center gap-2 bg-sky-500 hover:bg-sky-400 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200">
-                    Get Quote <ChevronRight className="w-4 h-4" />
-                  </button>
-                </Link>
+                <button
+                  onClick={handleBulkClick}
+                  className="flex items-center gap-2 bg-sky-500 hover:bg-sky-400 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
+                >
+                  Get Quote <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Why Aqua Forge */}
       <section className="py-14 px-4 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto text-center">
           <span className="text-xs font-semibold text-sky-500 uppercase tracking-widest">
@@ -397,8 +398,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Product Quick View Modal */}
       {selectedProduct && (
         <div
           className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-50 flex items-center justify-center px-4"

@@ -84,8 +84,6 @@ export default function AnnouncementBar() {
             )}
           </button>
         </div>
-
-        {/* Dot indicators */}
         <div className="hidden sm:flex items-center gap-1 flex-shrink-0">
           {messages.map((_, i) => (
             <button
@@ -97,16 +95,12 @@ export default function AnnouncementBar() {
             />
           ))}
         </div>
-
-        {/* Next */}
         <button
           onClick={() => changeTo("next")}
           className="w-5 h-5 flex items-center justify-center rounded-md hover:bg-white/15 transition flex-shrink-0"
         >
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
-
-        {/* Dismiss */}
         <button
           onClick={() => setVisible(false)}
           className="w-5 h-5 flex items-center justify-center rounded-md hover:bg-white/15 transition flex-shrink-0 ml-1"
