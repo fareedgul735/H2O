@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { ShoppingCart, Eye, X, Star, Droplets, Plus, Minus, Palette } from "lucide-react";
+import {
+  ShoppingCart,
+  Eye,
+  X,
+  Star,
+  Droplets,
+  Plus,
+  Minus,
+  Palette,
+} from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../store/CartSlice";
 import { Link } from "react-router-dom";
 import { allProducts } from "../../utils/Constant";
-
 
 const categories = ["All", "Own Brand", "Client Brand"];
 
@@ -13,7 +21,7 @@ const SmallCard = ({ product, onView, onAdd }) => {
   const total = product.pricePerCarton * cartons;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:border-sky-200 hover:shadow-sm transition-all duration-200 flex flex-col group">
+    <div className="bg-white cursor-pointer rounded-2xl border border-gray-100 overflow-hidden hover:border-sky-200 hover:shadow-sm transition-all duration-200 flex flex-col group">
       <div className="relative aspect-square overflow-hidden bg-gray-50">
         <img
           src={product.img}
@@ -21,14 +29,16 @@ const SmallCard = ({ product, onView, onAdd }) => {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
         {product.tag && (
-          <span className={`absolute top-2 left-2 ${product.tagColor} text-white text-[10px] font-bold px-2 py-0.5 rounded-full`}>
+          <span
+            className={`absolute top-2 left-2 ${product.tagColor} text-white text-[10px] font-bold px-2 py-0.5 rounded-full`}
+          >
             {product.tag}
           </span>
         )}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
           <button
             onClick={() => onView(product)}
-            className="w-8 h-8 bg-white rounded-xl flex items-center justify-center shadow-sm hover:bg-sky-50 transition active:scale-95"
+            className="w-8 h-8 bg-white cursor-pointer rounded-xl flex items-center justify-center shadow-sm hover:bg-sky-50 transition active:scale-95"
           >
             <Eye className="w-3.5 h-3.5 text-gray-700" />
           </button>
@@ -37,35 +47,31 @@ const SmallCard = ({ product, onView, onAdd }) => {
 
       <div className="p-3 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-1 mb-1">
-          <h3 className="text-xs font-semibold text-gray-800 leading-tight">{product.name}</h3>
+          <h3 className="text-xs font-semibold text-gray-800 leading-tight">
+            {product.name}
+          </h3>
           <span className="text-[10px] text-gray-400 bg-gray-50 border border-gray-100 rounded-lg px-1.5 py-0.5 flex-shrink-0">
             {product.size}
           </span>
         </div>
 
-        <div className="flex items-center gap-1 mb-2">
-          <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-          <span className="text-[11px] font-semibold text-gray-600">{product.rating}</span>
-          <span className="text-[11px] text-gray-400">({product.reviews})</span>
-          <div className="flex gap-0.5 ml-auto">
-            {product.colors?.slice(0, 3).map((c) => (
-              <span key={c} className="w-2 h-2 rounded-full ring-1 ring-gray-200" style={{ backgroundColor: c }} />
-            ))}
-          </div>
-        </div>
-
         <div className="flex items-center justify-between bg-gray-50 rounded-xl px-2.5 py-2 mb-2">
           <button
-            onClick={() => setCartons((p) => Math.max(product.minCarton, p - 1))}
+            onClick={() =>
+              setCartons((p) => Math.max(product.minCarton, p - 1))
+            }
             className="w-5 h-5 rounded-lg bg-white border border-gray-200 flex items-center justify-center hover:border-sky-300 transition active:scale-95"
           >
             <Minus className="w-2.5 h-2.5 text-gray-500" />
           </button>
           <div className="text-center">
             <p className="text-xs font-bold text-gray-800">
-              {cartons} <span className="font-normal text-gray-400">cartons</span>
+              {cartons}{" "}
+              <span className="font-normal text-gray-400">cartons</span>
             </p>
-            <p className="text-[10px] text-sky-600 font-semibold">Rs. {total.toLocaleString()}</p>
+            <p className="text-[10px] text-sky-600 font-semibold">
+              Rs. {total.toLocaleString()}
+            </p>
           </div>
           <button
             onClick={() => setCartons((p) => p + 1)}
@@ -76,12 +82,15 @@ const SmallCard = ({ product, onView, onAdd }) => {
         </div>
 
         <p className="text-[10px] text-gray-400 mb-2">
-          Rs. {product.pricePerCarton.toLocaleString()}/carton · Min {product.minCarton}
+          Rs. {product.pricePerCarton.toLocaleString()}/carton · Min{" "}
+          {product.minCarton}
         </p>
 
         <button
-          onClick={() => onAdd({ ...product, cartons, price: product.pricePerCarton })}
-          className="w-full flex items-center justify-center gap-1.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white py-2 rounded-xl text-[11px] font-semibold transition-all duration-200 mt-auto"
+          onClick={() =>
+            onAdd({ ...product, cartons, price: product.pricePerCarton })
+          }
+          className="w-full cursor-pointer flex items-center justify-center gap-1.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white py-2 rounded-xl text-[11px] font-semibold transition-all duration-200 mt-auto"
         >
           <ShoppingCart className="w-3 h-3" />
           Add · Rs. {total.toLocaleString()}
@@ -105,7 +114,11 @@ const QuickView = ({ product, onClose, onAdd }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="sm:w-2/5 bg-gray-50 aspect-square sm:aspect-auto flex-shrink-0">
-          <img src={product.img} alt={product.name} className="w-full h-full object-cover" />
+          <img
+            src={product.img}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="flex-1 p-5 flex flex-col">
           <div className="flex items-start justify-between mb-2">
@@ -113,7 +126,9 @@ const QuickView = ({ product, onClose, onAdd }) => {
               <p className="text-[10px] text-gray-400 uppercase tracking-widest font-medium mb-0.5">
                 {product.category}
               </p>
-              <h2 className="text-base font-bold text-gray-900">{product.name}</h2>
+              <h2 className="text-base font-bold text-gray-900">
+                {product.name}
+              </h2>
             </div>
             <button
               onClick={onClose}
@@ -123,13 +138,9 @@ const QuickView = ({ product, onClose, onAdd }) => {
             </button>
           </div>
 
-          <div className="flex items-center gap-1 mb-3">
-            <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-            <span className="text-xs font-semibold text-gray-700">{product.rating}</span>
-            <span className="text-xs text-gray-400">({product.reviews})</span>
-          </div>
-
-          <p className="text-xs text-gray-500 leading-relaxed mb-4 flex-1">{product.des}</p>
+          <p className="text-xs text-gray-500 leading-relaxed mb-4 flex-1">
+            {product.des}
+          </p>
 
           <div className="bg-gray-50 rounded-xl p-3 mb-4 space-y-2">
             <div className="grid grid-cols-2 gap-2 text-xs">
@@ -139,15 +150,21 @@ const QuickView = ({ product, onClose, onAdd }) => {
               </div>
               <div>
                 <p className="text-gray-400">Per carton</p>
-                <p className="font-semibold text-gray-800">{product.bottlesPerCarton} bottles</p>
+                <p className="font-semibold text-gray-800">
+                  {product.bottlesPerCarton} bottles
+                </p>
               </div>
               <div>
                 <p className="text-gray-400">Price/carton</p>
-                <p className="font-semibold text-gray-800">Rs. {product.pricePerCarton.toLocaleString()}</p>
+                <p className="font-semibold text-gray-800">
+                  Rs. {product.pricePerCarton.toLocaleString()}
+                </p>
               </div>
               <div>
                 <p className="text-gray-400">Min. order</p>
-                <p className="font-semibold text-gray-800">{product.minCarton} cartons</p>
+                <p className="font-semibold text-gray-800">
+                  {product.minCarton} cartons
+                </p>
               </div>
             </div>
 
@@ -157,12 +174,16 @@ const QuickView = ({ product, onClose, onAdd }) => {
               <span className="text-xs text-gray-500">Cartons</span>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setCartons((p) => Math.max(product.minCarton, p - 1))}
+                  onClick={() =>
+                    setCartons((p) => Math.max(product.minCarton, p - 1))
+                  }
                   className="w-6 h-6 rounded-lg bg-white border border-gray-200 flex items-center justify-center hover:border-sky-300 transition"
                 >
                   <Minus className="w-3 h-3 text-gray-500" />
                 </button>
-                <span className="text-sm font-bold w-6 text-center">{cartons}</span>
+                <span className="text-sm font-bold w-6 text-center">
+                  {cartons}
+                </span>
                 <button
                   onClick={() => setCartons((p) => p + 1)}
                   className="w-6 h-6 rounded-lg bg-white border border-gray-200 flex items-center justify-center hover:border-sky-300 transition"
@@ -174,12 +195,17 @@ const QuickView = ({ product, onClose, onAdd }) => {
 
             <div className="flex justify-between">
               <span className="text-xs text-gray-400">Total</span>
-              <span className="text-sm font-bold text-sky-600">Rs. {total.toLocaleString()}</span>
+              <span className="text-sm font-bold text-sky-600">
+                Rs. {total.toLocaleString()}
+              </span>
             </div>
           </div>
 
           <button
-            onClick={() => { onAdd({ ...product, cartons, price: product.pricePerCarton }); onClose(); }}
+            onClick={() => {
+              onAdd({ ...product, cartons, price: product.pricePerCarton });
+              onClose();
+            }}
             className="w-full flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
           >
             <ShoppingCart className="w-4 h-4" />
@@ -196,7 +222,9 @@ const SectionLabel = ({ color, title, sub }) => (
     <div className={`w-1 h-5 ${color} rounded-full`} />
     <h2 className="text-sm font-bold text-gray-800">{title}</h2>
     {sub && (
-      <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{sub}</span>
+      <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+        {sub}
+      </span>
     )}
   </div>
 );
@@ -212,27 +240,29 @@ const Products = () => {
   const clientList = allProducts.filter((p) => p.brandType === "client");
 
   const showOwn = activeCategory === "All" || activeCategory === "Own Brand";
-  const showClient = activeCategory === "All" || activeCategory === "Client Brand";
+  const showClient =
+    activeCategory === "All" || activeCategory === "Client Brand";
 
   return (
     <div className="bg-gray-50 min-h-screen">
-
       <div className="bg-white border-b border-gray-100 py-10 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-2 mb-2">
             <Droplets className="w-4 h-4 text-sky-500" />
-            <span className="text-xs font-semibold text-sky-500 uppercase tracking-widest">Products</span>
+            <span className="text-xs font-semibold text-sky-500 uppercase tracking-widest">
+              Products
+            </span>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Our Bottles</h1>
           <p className="text-gray-400 text-sm mb-6">
-            Absolutely Not (our brand) · Custom client brands · Min 50 cartons
+            Absolutely Not (our brand) · Custom client brands · Min 5 cartons
           </p>
           <div className="flex gap-2 flex-wrap">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                className={`px-4 py-1.5 cursor-pointer rounded-full text-sm font-medium transition-all duration-200 ${
                   activeCategory === cat
                     ? "bg-sky-500 text-white"
                     : "bg-gray-50 border border-gray-200 text-gray-500 hover:border-sky-300 hover:text-sky-500"
@@ -246,13 +276,21 @@ const Products = () => {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">
-
         {showOwn && (
           <div>
-            <SectionLabel color="bg-sky-500" title="Absolutely Not" sub="by Aqua Forge" />
+            <SectionLabel
+              color="bg-sky-500"
+              title="Absolutely Not"
+              sub="by Aqua Forge"
+            />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {ownList.map((p) => (
-                <SmallCard key={p.id} product={p} onView={setSelectedProduct} onAdd={handleAdd} />
+                <SmallCard
+                  key={p.id}
+                  product={p}
+                  onView={setSelectedProduct}
+                  onAdd={handleAdd}
+                />
               ))}
             </div>
           </div>
@@ -260,19 +298,32 @@ const Products = () => {
 
         {showClient && (
           <div>
-            <SectionLabel color="bg-orange-400" title="Custom Brand Orders" sub="Client examples" />
+            <SectionLabel
+              color="bg-orange-400"
+              title="Custom Brand Orders"
+              sub="Client examples"
+            />
             <div className="bg-orange-50 border border-orange-100 rounded-2xl p-4 mb-5 flex items-start gap-3">
               <Palette className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
               <p className="text-xs text-gray-600 leading-relaxed">
-                Want your brand here? Order 50+ cartons with your logo and label.{" "}
-                <Link to="/contact" className="text-sky-500 font-semibold hover:underline">
+                Want your brand here? Order 50+ cartons with your logo and
+                label.{" "}
+                <Link
+                  to="/contact"
+                  className="text-sky-500 font-semibold hover:underline"
+                >
                   Contact us →
                 </Link>
               </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {clientList.map((p) => (
-                <SmallCard key={p.id} product={p} onView={setSelectedProduct} onAdd={handleAdd} />
+                <SmallCard
+                  key={p.id}
+                  product={p}
+                  onView={setSelectedProduct}
+                  onAdd={handleAdd}
+                />
               ))}
             </div>
           </div>

@@ -130,8 +130,8 @@ const Contact = () => {
 
             <div className="h-px bg-gray-100" />
 
-            <InfoItem icon={Phone} label="Phone" value="+92 300 0000000" />
-            <InfoItem icon={Mail} label="Email" value="hello@aquaforge.pk" />
+            <InfoItem icon={Phone} label="Phone" value="+92 318 3516990" />
+            <InfoItem icon={Mail} label="Email" value="aquaforge2026@gmail.com" />
             <InfoItem
               icon={MapPin}
               label="Location"
@@ -140,7 +140,7 @@ const Contact = () => {
             <InfoItem
               icon={Clock}
               label="Working Hours"
-              value="Mon–Sat, 9am – 6pm"
+              value="Mon–Sunday, 9am – 12pm"
             />
           </div>
 

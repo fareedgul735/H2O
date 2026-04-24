@@ -144,7 +144,7 @@ const StatusToast = ({ orders, onClose }) => {
 const perks = [
   { icon: Shield, text: "BPA-Free & Food Grade" },
   { icon: Zap, text: "Same-Day Karachi Delivery" },
-  { icon: Star, text: "500+ Happy Brands" },
+  { icon: Star, text: "5+ Happy Brands" },
   { icon: Truck, text: "Nationwide Shipping" },
 ];
 
@@ -260,10 +260,11 @@ const Home = () => {
                   <h4 className="text-sm font-semibold text-gray-800 mb-1 leading-tight">
                     {product.name}
                   </h4>
-                  <div className="flex items-center gap-1 mb-3">
-                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                    <span className="text-xs text-gray-500">4.8</span>
-                  </div>
+                  <p className="text-[10px] text-gray-400 mb-2">
+                    Rs. {product.pricePerCarton.toLocaleString()}/carton · Min{" "}
+                    {product.minCarton}
+                  </p>
+
                   <div className="flex items-center justify-between mt-auto">
                     <p className="text-sm font-bold text-gray-900">
                       Rs. {product.price?.toLocaleString()}
@@ -319,7 +320,7 @@ const Home = () => {
                 </p>
                 <button
                   onClick={handleDesignClick}
-                  className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
+                  className="flex cursor-pointer items-center gap-2 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
                 >
                   Start Designing <ChevronRight className="w-4 h-4" />
                 </button>
@@ -342,7 +343,7 @@ const Home = () => {
                 </p>
                 <button
                   onClick={handleBulkClick}
-                  className="flex items-center gap-2 bg-sky-500 hover:bg-sky-400 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
+                  className="flex cursor-pointer items-center gap-2 bg-sky-500 hover:bg-sky-400 active:scale-95 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
                 >
                   Get Quote <ChevronRight className="w-4 h-4" />
                 </button>

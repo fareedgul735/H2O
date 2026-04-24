@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const messages = [
   {
-    text: "Free Shipping all over Karachi on orders above Rs. 1,500",
+    text: "Free Shipping all over Karachi",
     icon: "🚚",
     action: null,
   },

@@ -44,9 +44,9 @@ const About = () => {
   ];
 
   const stats = [
-    { value: "500+", label: "Brands Served" },
-    { value: "1M+", label: "Bottles Delivered" },
-    { value: "50+", label: "Cities Reached" },
+    { value: "5+", label: "Brands Served" },
+    { value: "1k+", label: "Bottles Delivered" },
+    { value: "1", label: "Cities Reached" },
     { value: "98%", label: "Client Satisfaction" },
   ];
 
@@ -155,7 +155,7 @@ const About = () => {
                 />
               ))}
               <span className="ml-1">
-                Trusted by 500+ clients across Pakistan
+                Trusted by 5+ clients across Pakistan
               </span>
             </div>
           </div>

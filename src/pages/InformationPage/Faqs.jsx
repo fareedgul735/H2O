@@ -26,7 +26,7 @@ const faqs = [
   {
     category: "Customization",
     q: "What is the minimum order quantity?",
-    a: "Minimum order starts at 50 units. Bulk pricing available for larger quantities.",
+    a: "Minimum order starts at 5 units. Bulk pricing available for larger quantities.",
   },
   {
     category: "Online Store",

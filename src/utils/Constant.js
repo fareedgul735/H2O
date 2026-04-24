@@ -11,18 +11,15 @@ export const products = [
     name: "Absolutely Not 500ml",
     des: "Aqua Forge's signature water bottle. Crisp, clean, and crafted for everyday hydration. BPA-free with a leak-proof lid.",
     size: "500ml",
-    pricePerBottle: 360,
+    pricePerBottle: 36,
     bottlesPerCarton: 12,
     get pricePerCarton() {
       return this.pricePerBottle * this.bottlesPerCarton;
-    }, // 14,400
-    minCarton: 50,
+    },
+    minCarton: 6,
     get price() {
       return this.pricePerCarton * this.minCarton;
-    }, 
-    rating: 4.9,
-    reviews: 312,
-    colors: ["#0ea5e9", "#1e293b", "#f1f5f9"],
+    },
     category: "Own Brand",
   },
   {
@@ -35,18 +32,15 @@ export const products = [
     name: "Absolutely Not 1500ml",
     des: "The big one. Perfect for long days, gym sessions, and staying fully hydrated. Same premium quality, larger capacity.",
     size: "1500ml",
-    pricePerBottle: 480,
+    pricePerBottle: 62,
     bottlesPerCarton: 6,
     get pricePerCarton() {
       return this.pricePerBottle * this.bottlesPerCarton;
-    }, // 11,520
-    minCarton: 50,
+    },
+    minCarton: 6,
     get price() {
       return this.pricePerCarton * this.minCarton;
     },
-    rating: 4.8,
-    reviews: 189,
-    colors: ["#0ea5e9", "#0369a1", "#f1f5f9"],
     category: "Own Brand",
   },
   {
@@ -59,18 +53,15 @@ export const products = [
     name: "Joker 500ml",
     des: "Launch your own water bottle brand. Your logo, your colors, your label — printed on our premium 500ml bottle. Min 50 cartons.",
     size: "500ml",
-    pricePerBottle: 420,
-    bottlesPerCarton: 40,
+    pricePerBottle: 36,
+    bottlesPerCarton: 12,
     get pricePerCarton() {
       return this.pricePerBottle * this.bottlesPerCarton;
-    }, // 16,800
-    minCarton: 50,
+    },
+    minCarton: 6,
     get price() {
       return this.pricePerCarton * this.minCarton;
     },
-    rating: 4.9,
-    reviews: 94,
-    colors: ["#f97316", "#0ea5e9", "#8b5cf6"],
     category: "Custom Brand",
   },
   {
@@ -83,23 +74,18 @@ export const products = [
     name: "Joker 1500ml",
     des: "Go big with your brand. 1500ml custom bottles with full branding — ideal for retail, corporate gifting, and events.",
     size: "1500ml",
-    pricePerBottle: 540,
-    bottlesPerCarton: 24,
+    pricePerBottle: 62,
+    bottlesPerCarton: 6,
     get pricePerCarton() {
       return this.pricePerBottle * this.bottlesPerCarton;
-    }, // 12,960
-    minCarton: 50,
+    },
+    minCarton: 6,
     get price() {
       return this.pricePerCarton * this.minCarton;
     },
-    rating: 4.8,
-    reviews: 61,
-    colors: ["#f97316", "#0ea5e9", "#8b5cf6"],
     category: "Custom Brand",
   },
 ];
-
-
 
 export const allProducts = [
   {
@@ -112,13 +98,10 @@ export const allProducts = [
     name: "Absolutely Not 500ml",
     des: "Aqua Forge's signature bottle. Crisp, clean, BPA-free with leak-proof lid. Perfect for daily hydration.",
     size: "500ml",
-    pricePerBottle: 360,
-    bottlesPerCarton: 40,
-    pricePerCarton: 14400,
-    minCarton: 50,
-    rating: 4.9,
-    reviews: 312,
-    colors: ["#0ea5e9", "#1e293b", "#f1f5f9"],
+    pricePerBottle: 36,
+    bottlesPerCarton: 12,
+    pricePerCarton: 432,
+    minCarton: 6,
   },
   {
     id: "af-1500",
@@ -130,13 +113,10 @@ export const allProducts = [
     name: "Absolutely Not 1500ml",
     des: "The big one. Extra capacity for gym, travel and long days. Same premium Absolutely Not quality.",
     size: "1500ml",
-    pricePerBottle: 480,
-    bottlesPerCarton: 24,
-    pricePerCarton: 11520,
-    minCarton: 50,
-    rating: 4.8,
-    reviews: 189,
-    colors: ["#0ea5e9", "#0369a1", "#e0f2fe"],
+    pricePerBottle: 62,
+    bottlesPerCarton: 6,
+    pricePerCarton: 372,
+    minCarton: 6,
   },
 
   // ── Client Brands ──
@@ -150,13 +130,10 @@ export const allProducts = [
     name: "HydraX 500ml",
     des: "Custom branded bottle for HydraX — a Karachi-based fitness brand. Bold identity, clean label.",
     size: "500ml",
-    pricePerBottle: 420,
-    bottlesPerCarton: 40,
-    pricePerCarton: 16800,
-    minCarton: 50,
-    rating: 4.8,
-    reviews: 42,
-    colors: ["#8b5cf6", "#6d28d9", "#f1f5f9"],
+    pricePerBottle: 36,
+    bottlesPerCarton: 12,
+    pricePerCarton: 432,
+    minCarton: 6,
   },
   {
     id: "client-002",
@@ -168,13 +145,10 @@ export const allProducts = [
     name: "PureFlow 1500ml",
     des: "Premium hydration brand for corporate offices. 1500ml with a minimal, professional finish.",
     size: "1500ml",
-    pricePerBottle: 540,
-    bottlesPerCarton: 24,
-    pricePerCarton: 12960,
-    minCarton: 50,
-    rating: 4.7,
-    reviews: 29,
-    colors: ["#10b981", "#065f46", "#f0fdf4"],
+    pricePerBottle: 62,
+    bottlesPerCarton: 6,
+    pricePerCarton: 372,
+    minCarton: 6,
   },
   {
     id: "client-003",
@@ -186,13 +160,10 @@ export const allProducts = [
     name: "AquaLux 500ml",
     des: "Luxury matte finish bottle for AquaLux — crafted for premium gifting and high-end events.",
     size: "500ml",
-    pricePerBottle: 460,
-    bottlesPerCarton: 40,
-    pricePerCarton: 18400,
-    minCarton: 50,
-    rating: 4.9,
-    reviews: 18,
-    colors: ["#be123c", "#1e293b", "#fdf2f8"],
+    pricePerBottle: 36,
+    bottlesPerCarton: 12,
+    pricePerCarton: 472,
+    minCarton: 6,
   },
   {
     id: "client-004",
@@ -204,12 +175,9 @@ export const allProducts = [
     name: "ZenDrop 1500ml",
     des: "Earthy wellness bottle for ZenDrop — mindful hydration brand with an organic identity.",
     size: "1500ml",
-    pricePerBottle: 510,
-    bottlesPerCarton: 24,
-    pricePerCarton: 12240,
-    minCarton: 50,
-    rating: 4.6,
-    reviews: 33,
-    colors: ["#d97706", "#92400e", "#fffbeb"],
+    pricePerBottle: 62,
+    bottlesPerCarton: 6,
+    pricePerCarton: 372,
+    minCarton: 6,
   },
 ];
